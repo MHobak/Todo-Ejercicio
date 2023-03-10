@@ -15,7 +15,7 @@ builder.Services.AddSwaggerGen();
 //Configurar contexto de base de datos
 //Refactor later
 builder.Services.AddDbContext<TodoDbContext>(options =>
-        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+        options.UseSqlServer(builder.Configuration.GetConnectionString("DBConnection")));
 
 #endregion
 
