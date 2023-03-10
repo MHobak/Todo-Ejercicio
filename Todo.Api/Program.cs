@@ -1,5 +1,5 @@
+using Infraestructure.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
-using Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,9 +13,7 @@ builder.Services.AddSwaggerGen();
 #region Dependency Injection
 
 //Configurar contexto de base de datos
-//Refactor later
-builder.Services.AddDbContext<TodoDbContext>(options =>
-        options.UseSqlServer(builder.Configuration.GetConnectionString("DBConnection")));
+builder.Services.AddSqlServerDbContext(builder.Configuration.GetConnectionString("DBConnection"));
 
 #endregion
 
