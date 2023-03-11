@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Persistence;
 using Persistence.Implementations.Generic;
@@ -41,6 +42,19 @@ namespace Infraestructure.Extensions.DependencyInjection
         {
             services.AddScoped<IMetaService, MetaService>();
 
+            return services;
+        }
+
+        public static IServiceCollection AddMappers(this IServiceCollection services)
+        {
+            var mappingConfig = new MapperConfiguration(cfg =>
+            {
+                cfg.AddMaps("Infraestructure");
+            });
+
+            IMapper mapper = mappingConfig.CreateMapper();
+
+            services.AddSingleton(mapper);
             return services;
         }
     }

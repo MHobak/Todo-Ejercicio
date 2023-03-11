@@ -16,6 +16,9 @@ builder.Services.AddSwaggerGen();
 
 //Configurar contexto de base de datos
 builder.Services.AddSqlServerDbContext(builder.Configuration.GetConnectionString("DBConnection"));
+builder.Services.AddRepositoryDependency();
+builder.Services.AddServiceDependency();
+builder.Services.AddMappers();
 
 #endregion
 

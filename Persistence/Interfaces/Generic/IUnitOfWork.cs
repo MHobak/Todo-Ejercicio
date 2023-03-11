@@ -6,10 +6,18 @@
 
         void Commit();
 
+        Task CommitAsync();
+
         void CreateTransaction();
+
+        Task CreateTransactionAsync();
 
         void Rollback();
 
+        Task RollbackAsync();
+
         void Save();
+
+        Task SaveAsync();
     }
 }

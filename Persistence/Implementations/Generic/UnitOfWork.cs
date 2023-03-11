@@ -21,9 +21,19 @@ namespace Persistence.Implementations.Generic
             objTran.Commit();
         }
 
+        public async Task CommitAsync()
+        {
+            await objTran.CommitAsync();
+        }
+
         public void CreateTransaction()
         {
             objTran = Context.Database.BeginTransaction();
+        }
+
+        public async Task CreateTransactionAsync()
+        {
+            objTran = await Context.Database.BeginTransactionAsync();
         }
 
         public void Rollback()
@@ -32,9 +42,20 @@ namespace Persistence.Implementations.Generic
             objTran.Dispose();
         }
 
+        public async Task RollbackAsync()
+        {
+            await objTran.RollbackAsync();
+            await objTran.DisposeAsync();
+        }
+
         public void Save()
         {
             this.Context.SaveChanges();
+        }
+
+        public async Task SaveAsync()
+        {
+            await this.Context.SaveChangesAsync();
         }
 
         public void Dispose()
