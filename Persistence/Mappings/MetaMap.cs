@@ -22,14 +22,6 @@ namespace Persistence.Mappings
             builder.Property(m => m.FechaCreacion)
                 .IsRequired()
                 .HasComment("Fecha de creación de la meta");
-
-            builder.Property(m => m.TotalTareas)
-                .HasComment("Campo calculado, cantidad de tareas de la meta");
-                //.HasComputedColumnSql("dbo.GetTotalTareas(Id)");
-
-            builder.Property(m => m.TareasCompletadas)
-                .HasComment("Campo calculado, cantidad de tareas de la meta");
-                //.HasComputedColumnSql("dbo.GetTotalTareasCompletadas(Id)");
         }
     }
 }
