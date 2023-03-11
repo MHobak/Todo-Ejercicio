@@ -18,10 +18,10 @@ namespace Persistence.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nombre = table.Column<string>(type: "nvarchar(80)", maxLength: 80, nullable: false, comment: "Nombre de la meta"),
-                    FechaCreacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2023, 3, 11, 1, 33, 46, 805, DateTimeKind.Local).AddTicks(9807), comment: "Fecha de creación de la meta"),
+                    FechaCreacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2023, 3, 11, 2, 2, 51, 869, DateTimeKind.Local).AddTicks(2547), comment: "Fecha de creación de la meta"),
                     TareasCompletadas = table.Column<int>(type: "int", nullable: false, comment: "Campo calculado, cantidad de tareas de la meta"),
                     TotalTareas = table.Column<int>(type: "int", nullable: false, comment: "Campo calculado, cantidad de tareas de la meta"),
-                    PorcentajeCumplimiento = table.Column<decimal>(type: "decimal(3,2)", precision: 3, scale: 2, nullable: false, comment: "Campo calculado, cantidad de tareas de la meta")
+                    PorcentajeCumplimiento = table.Column<decimal>(type: "decimal(5,2)", precision: 5, scale: 2, nullable: false, comment: "Campo calculado, cantidad de tareas de la meta")
                 },
                 constraints: table =>
                 {
@@ -36,7 +36,7 @@ namespace Persistence.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nombre = table.Column<string>(type: "nvarchar(80)", maxLength: 80, nullable: false, comment: "Nombre de la tarea"),
-                    FechaCreacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2023, 3, 11, 1, 33, 46, 806, DateTimeKind.Local).AddTicks(2648), comment: "Fecha de creación de la tarea"),
+                    FechaCreacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2023, 3, 11, 2, 2, 51, 869, DateTimeKind.Local).AddTicks(5221), comment: "Fecha de creación de la tarea"),
                     EsImportante = table.Column<bool>(type: "bit", nullable: false, defaultValue: false, comment: "Indicador de importancia de una tarea"),
                     Estado = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false, defaultValue: "Abierta", comment: "Estado de completado de la tarea"),
                     MetaId = table.Column<int>(type: "int", nullable: false)

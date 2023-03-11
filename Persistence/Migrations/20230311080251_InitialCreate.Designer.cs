@@ -12,7 +12,7 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(TodoDbContext))]
-    [Migration("20230311073346_InitialCreate")]
+    [Migration("20230311080251_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -36,7 +36,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("FechaCreacion")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 3, 11, 1, 33, 46, 805, DateTimeKind.Local).AddTicks(9807))
+                        .HasDefaultValue(new DateTime(2023, 3, 11, 2, 2, 51, 869, DateTimeKind.Local).AddTicks(2547))
                         .HasComment("Fecha de creación de la meta");
 
                     b.Property<string>("Nombre")
@@ -46,8 +46,8 @@ namespace Persistence.Migrations
                         .HasComment("Nombre de la meta");
 
                     b.Property<decimal>("PorcentajeCumplimiento")
-                        .HasPrecision(3, 2)
-                        .HasColumnType("decimal(3,2)")
+                        .HasPrecision(5, 2)
+                        .HasColumnType("decimal(5,2)")
                         .HasComment("Campo calculado, cantidad de tareas de la meta");
 
                     b.Property<int>("TareasCompletadas")
@@ -94,7 +94,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("FechaCreacion")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 3, 11, 1, 33, 46, 806, DateTimeKind.Local).AddTicks(2648))
+                        .HasDefaultValue(new DateTime(2023, 3, 11, 2, 2, 51, 869, DateTimeKind.Local).AddTicks(5221))
                         .HasComment("Fecha de creación de la tarea");
 
                     b.Property<int>("MetaId")

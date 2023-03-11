@@ -32,7 +32,7 @@ namespace Persistence.Mappings
                 .HasComment("Campo calculado, cantidad de tareas de la meta");
 
             builder.Property(m => m.PorcentajeCumplimiento)
-                .HasPrecision(3,2)
+                .HasPrecision(5,2)
                 .HasComment("Campo calculado, cantidad de tareas de la meta");
 
             //builder.Property(m => m.TotalTareas)
