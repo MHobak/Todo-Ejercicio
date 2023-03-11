@@ -1,4 +1,4 @@
-//using Infraestructure.Extensions.DependencyInjection;
+using Infraestructure.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 using Persistence.Initializers;
@@ -15,7 +15,7 @@ builder.Services.AddSwaggerGen();
 #region Dependency Injection
 
 //Configurar contexto de base de datos
-//builder.Services.AddSqlServerDbContext(builder.Configuration.GetConnectionString("DBConnection"));
+builder.Services.AddSqlServerDbContext(builder.Configuration.GetConnectionString("DBConnection"));
 
 #endregion
 
