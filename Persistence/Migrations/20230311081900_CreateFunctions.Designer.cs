@@ -12,8 +12,8 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(TodoDbContext))]
-    [Migration("20230311080251_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20230311081900_CreateFunctions")]
+    partial class CreateFunctions
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,9 +34,7 @@ namespace Persistence.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("FechaCreacion")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 3, 11, 2, 2, 51, 869, DateTimeKind.Local).AddTicks(2547))
                         .HasComment("Fecha de creación de la meta");
 
                     b.Property<string>("Nombre")
@@ -92,9 +90,7 @@ namespace Persistence.Migrations
                         .HasComment("Estado de completado de la tarea");
 
                     b.Property<DateTime>("FechaCreacion")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 3, 11, 2, 2, 51, 869, DateTimeKind.Local).AddTicks(5221))
                         .HasComment("Fecha de creación de la tarea");
 
                     b.Property<int>("MetaId")

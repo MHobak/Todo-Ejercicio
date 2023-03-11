@@ -27,7 +27,6 @@ namespace Persistence.Mappings
 
             builder.Property(t => t.FechaCreacion)
                 .IsRequired()
-                .HasDefaultValue(DateTime.Now)
                 .HasComment("Fecha de creación de la tarea");
 
             builder.Property(t => t.EsImportante)

@@ -22,7 +22,6 @@ namespace Persistence.Mappings
 
             builder.Property(m => m.FechaCreacion)
                 .IsRequired()
-                .HasDefaultValue(DateTime.Now)
                 .HasComment("Fecha de creación de la meta");
 
             builder.Property(m => m.TotalTareas)
