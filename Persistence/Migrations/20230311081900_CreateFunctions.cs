@@ -10,13 +10,47 @@ namespace Persistence.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            var getTotalTareasFunction = System.IO.File.ReadAllText(@"Script//Functions/Metas/GetTotalTareas.sql");
-            var getTotalTareasCompletadasFuntion = System.IO.File.ReadAllText(@"Script//Functions/Metas/GetTotalTareas.sql");
-            var getTareasCompletionPercentageFunction = System.IO.File.ReadAllText(@"Script//Functions/Metas/GetTotalTareas.sql");
+            migrationBuilder.Sql(@"
+                CREATE FUNCTION dbo.GetTotalTareas(@MetaId INT)
+                RETURNS INT
+                AS
+                BEGIN
+                    DECLARE @Total iNT;
+                    SET @Total = (SELECT COUNT(1) FROM Tarea WHERE MetaId = @MetaId)
+                    RETURN @Total
+                END
+            ");
 
-            migrationBuilder.Sql(getTotalTareasFunction);
-            migrationBuilder.Sql(getTotalTareasCompletadasFuntion);
-            migrationBuilder.Sql(getTareasCompletionPercentageFunction);
+            migrationBuilder.Sql(@"
+                CREATE FUNCTION dbo.GetTotalTareasCompletadas(@MetaId INT)
+                RETURNS INT
+                AS
+                BEGIN
+                    DECLARE @Total iNT;
+                    SET @Total = (SELECT COUNT(1) FROM Tarea WHERE MetaId = @MetaId AND Estado = 'Completada')
+                    RETURN @Total
+                END
+            ");
+
+            migrationBuilder.Sql(@"
+                CREATE FUNCTION dbo.GetTareasCompletionPercentage(@MetaId INT)
+                RETURNS INT
+                AS
+                BEGIN
+                    DECLARE @Total iNT;
+                    SET @Total = (
+                        SELECT CAST(
+			                (CASE 
+			                WHEN (SELECT COUNT(1) FROM Tarea WHERE Tarea.MetaId = @MetaId) = 0 THEN 0 -- Si las tareas de la meta = 0 regresar 0 para no dividir entre 0
+			                ELSE (
+				                (SELECT COUNT(1) FROM Tarea WHERE Tarea.MetaId = @MetaId AND Tarea.Estado = 'Completada') * 100.0 / --dividir la cantidad de tareas completadas entre el total
+				                (SELECT COUNT(1) FROM Tarea WHERE Tarea.MetaId = @MetaId)
+			                ) END) AS DECIMAL(5,2) 
+		                )
+                    )
+                    RETURN @Total
+                END
+            ");
         }
 
         /// <inheritdoc />
