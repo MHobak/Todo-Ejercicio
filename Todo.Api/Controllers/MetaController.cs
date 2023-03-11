@@ -9,16 +9,18 @@ namespace Todo.Api.Controllers
     public class MetaController : ControllerBase
     {
         private readonly IMetaService metaService;
+        private readonly IMetaViewService metaViewService;
 
-        public MetaController(IMetaService metaService)
+        public MetaController(IMetaService metaService, IMetaViewService metaViewService)
         {
             this.metaService = metaService ?? throw new ArgumentNullException(nameof(metaService));
+            this.metaViewService = metaViewService ?? throw new ArgumentNullException(nameof(metaViewService));
         }
 
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var result = await metaService.GetAll();
+            var result = await metaViewService.GetAll();
 
             return Ok(result);
         }

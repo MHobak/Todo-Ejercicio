@@ -34,6 +34,7 @@ namespace Infraestructure.Extensions.DependencyInjection
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IMetaRepository, MetaRepository>();
             services.AddTransient<ITareaRepository, TareaRepository>();
+            services.AddTransient<IMetaViewRepository, MetaViewRepository>();
 
             return services;
         }
@@ -41,6 +42,7 @@ namespace Infraestructure.Extensions.DependencyInjection
         public static IServiceCollection AddServiceDependency(this IServiceCollection services)
         {
             services.AddScoped<IMetaService, MetaService>();
+            services.AddScoped<IMetaViewService, MetaViewService>();
 
             return services;
         }
