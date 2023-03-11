@@ -12,7 +12,7 @@
 
         public int TareasCompletadas { get; set; }
         public int TotalTareas { get; set; }
-        public decimal PorcentajeCumplimiento => TotalTareas > 0 ? 0 : (TareasCompletadas * 100) / TotalTareas;
+        //public decimal PorcentajeCumplimiento => TotalTareas > 0 ? 0 : (TareasCompletadas * 100) / TotalTareas;
 
         #endregion
     }

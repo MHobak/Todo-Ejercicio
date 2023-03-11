@@ -31,7 +31,7 @@ namespace Persistence.Mappings
                 .HasComment("Campo calculado, cantidad de tareas de la meta");
                 //.HasComputedColumnSql("dbo.GetTotalTareasCompletadas(Id)");
 
-            builder.Ignore(m => m.PorcentajeCumplimiento);
+            //builder.Ignore(m => m.PorcentajeCumplimiento);
 
             //builder.Property(m => m.PorcentajeCumplimiento)
             //    .HasPrecision(5, 2)
