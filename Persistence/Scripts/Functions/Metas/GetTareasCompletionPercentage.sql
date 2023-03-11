@@ -2,7 +2,7 @@
 RETURNS INT
 AS
 BEGIN
-    DECLARE @Total iNT;
+    DECLARE @Total DECIMAL(5,2);
     SET @Total = (
         SELECT CAST(
 			(CASE 

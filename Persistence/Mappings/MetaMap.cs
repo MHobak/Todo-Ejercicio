@@ -1,5 +1,4 @@
 ﻿using Domain.Entities;
-using Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -25,17 +24,19 @@ namespace Persistence.Mappings
                 .HasComment("Fecha de creación de la meta");
 
             builder.Property(m => m.TotalTareas)
-                .HasComment("Campo calculado, cantidad de tareas de la meta")
-                .HasComputedColumnSql("dbo.GetTotalTareas(Id)");
+                .HasComment("Campo calculado, cantidad de tareas de la meta");
+                //.HasComputedColumnSql("dbo.GetTotalTareas(Id)");
 
             builder.Property(m => m.TareasCompletadas)
-                .HasComment("Campo calculado, cantidad de tareas de la meta")
-                .HasComputedColumnSql("dbo.GetTotalTareasCompletadas(Id)");
+                .HasComment("Campo calculado, cantidad de tareas de la meta");
+                //.HasComputedColumnSql("dbo.GetTotalTareasCompletadas(Id)");
 
-            builder.Property(m => m.PorcentajeCumplimiento)
-                .HasPrecision(5, 2)
-                .HasComment("Campo calculado, cantidad de tareas de la meta")
-                .HasComputedColumnSql("dbo.GetTareasCompletionPercentage(Id)");
+            builder.Ignore(m => m.PorcentajeCumplimiento);
+
+            //builder.Property(m => m.PorcentajeCumplimiento)
+            //    .HasPrecision(5, 2)
+            //    .HasComment("Campo calculado, cantidad de tareas de la meta")
+            //    .HasComputedColumnSql("dbo.GetTareasCompletionPercentage(Id)");
         }
     }
 }
