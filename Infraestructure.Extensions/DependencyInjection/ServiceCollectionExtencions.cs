@@ -1,8 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Persistence;
+using Persistence.Implementations.Generic;
+using Persistence.Implementations.Repository;
+using Persistence.Interfaces.Generic;
+using Persistence.Interfaces.Repository;
+using Service.Implementations;
+using Service.Interfaces;
 
-namespace Infraestructure.DependencyInjection
+namespace Infraestructure.Extensions.DependencyInjection
 {
     public static class ServiceCollectionExtencions
     {
@@ -16,9 +22,24 @@ namespace Infraestructure.DependencyInjection
         public static IServiceCollection AddSqlServerDbContext(this IServiceCollection services, string connectionString)
         {
             //Configurar contexto de base de datos
-            //Refactor later
             services.AddDbContext<TodoDbContext>(options =>
                     options.UseSqlServer(connectionString));
+
+            return services;
+        }
+
+        public static IServiceCollection AddRepositoryDependency(this IServiceCollection services)
+        {
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddTransient<IMetaRepository, MetaRepository>();
+            services.AddTransient<ITareaRepository, TareaRepository>();
+
+            return services;
+        }
+
+        public static IServiceCollection AddServiceDependency(this IServiceCollection services)
+        {
+            services.AddScoped<IMetaService, MetaService>();
 
             return services;
         }
