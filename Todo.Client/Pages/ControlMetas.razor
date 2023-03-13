@@ -4,57 +4,20 @@
 
 <PageTitle>Control de metas</PageTitle>
 
-  <div class="row">
-    <div class="col-4">
-      <MetasListComponent/>
-    </div>
-    <div class="col-6">
-      <div class="card">
-        <div class="card-header">
-            Configurar plan de compensación
-        </div>
-            <div class="card-body">
+<MudGrid Spacing="1">
+    <MudItem xs="4">
+        <MetasListComponent/>
+    </MudItem>
+    <MudItem xs="6" >
+        <MudCard>
+            <MudCardHeader>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.h6">Configurar plan de compensación</MudText>
+                </CardHeaderContent>
+            </MudCardHeader>
+            <MudCardContent>
                 
-            </div>
-        </div>
-    </div>
-  </div>
-
-
-@* @if (metas == null)
-{
-    <p><em>Loading...</em></p>
-}
-else
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nombre</th>
-                <th>Fecha de creación</th>
-                <th>Tareas completadas</th>
-                <th>Total de tareas</th>
-                <th>Porcentaje de umplimiento</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var meta in metas)
-            {
-                <tr>
-                    <td>@meta.Id</td>
-                    <td>@meta.Nombre</td>
-                    <td>@meta.FechaCreacion.ToShortDateString()</td>
-                    <td>@meta.TareasCompletadas</td>
-                    <td>@meta.TotalTareas</td>
-                    <td>@String.Format("{0:P2}.", (meta.PorcentajeCumplimiento / 100))</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-} *@
-
-@code {
-
-
-}
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+</MudGrid>

@@ -1,43 +1,53 @@
 @inherits MetasListComponentBase
 
-<div class="card">
-    <div class="card-header">
-        <a href="#" class="btn btn-primary"> <span class="oi oi-plus" aria-hidden="true"></span> Nueva Tarea</a>
-    </div>
-    <ul class="list-group list-group-flush pt-2">
-        @if (metas == null)
-        {
-            <li class="list-group-item text-center">Cargando...</li>
-        }
-        else
-        {
-            if (!metas.Any())
-            {
-                <li class="list-group-item text-center">No se encontraron registros</li>
-            }
-            foreach (var meta in metas)
-            {
-                <li class="list-group-item mt-1 mb-1">
-                    <div class="d-flex justify-content-between">
-                        <div>
-                            <h5 class="card-title">@meta.Nombre</h5>
-                        </div>
-                        <div>
-                            <a href="#" class="btn btn-primary"> <span class="oi oi-pen" aria-hidden="true"></span></a>
-                            <a href="#" class="btn btn-primary"> <span class="oi oi-trash" aria-hidden="true"></span></a>
-                        </div>
-                    </div>
-                    <h6 class="card-subtitle mb-2 text-muted">Fecha creada: @meta.FechaCreacion.Date.ToString("dd/MM/yyyy")</h6>
-                    <br>
-                    <div class="d-flex justify-content-between">
-                        <div>Tareas completadas: @meta.TareasCompletadas/@meta.TotalTareas</div>
-                        <div>@meta.Porcentaje</div>
-                    </div>
-                    <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
-                        <div class="progress-bar" style=@("width: " + meta.Porcentaje)></div>
-                    </div>
-                </li>
-            }
-        }
-    </ul>
-</div>
+<MudCard Outlined="true">
+    <MudCardHeader>
+        <CardHeaderContent>
+            <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Add" Color="Color.Info">Nueva Tarea</MudButton>
+        </CardHeaderContent>
+    </MudCardHeader>
+    <MudCardContent>
+        <MudPaper>
+            <MudList Clickable="true">
+                @if (metas == null)
+                {
+                    <MudText Typo="Typo.h6">Cargando...</MudText>
+                }
+                else
+                {
+                    if (!metas.Any())
+                    {
+                        <MudText Typo="Typo.h6">No se encontraron registros</MudText>
+                    }
+                    foreach (var meta in metas)
+                    {
+                        <MudListItem>
+                            <MudPaper Class="mud-transparent" Elevation="0">
+                                <MudPaper Class="d-flex justify-space-between flex-grow-1 mud-transparent" Elevation="0">
+                                    <div>
+                                        <MudText Typo="Typo.h5">@meta.Nombre</MudText>
+                                    </div>
+                                    <div>
+                                        <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Medium"/>
+                                        <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Error" Size="Size.Medium"/>
+                                    </div>
+                                </MudPaper>
+                                <MudText Typo="Typo.subtitle1">Fecha creada: @meta.FechaCreacion.Date.ToString("dd/MM/yyyy")</MudText>
+                                <br>
+                                <MudPaper Class="d-flex justify-space-between flex-grow-1 mud-transparent" Elevation="0">
+                                    <div>
+                                        <MudText Typo="Typo.body1">Tareas completadas: @meta.TareasCompletadas/@meta.TotalTareas</MudText>
+                                    </div>
+                                    <div>
+                                        <MudText Typo="Typo.body1">@meta.Porcentaje</MudText>
+                                    </div>
+                                </MudPaper>
+                                <MudProgressLinear Color="Color.Primary" Striped="true" Size="Size.Large" Value="@Decimal.ToInt32(meta.PorcentajeCumplimiento)" Class="my-7" />
+                            </MudPaper>
+                        </MudListItem>
+                    }
+                }
+            </MudList>
+        </MudPaper>
+    </MudCardContent>
+</MudCard>
