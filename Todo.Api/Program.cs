@@ -20,6 +20,9 @@ builder.Services.AddRepositoryDependency();
 builder.Services.AddServiceDependency();
 builder.Services.AddMappers();
 
+//configuración para CORS
+builder.Services.ConfigureCors();
+
 #endregion
 
 var app = builder.Build();
@@ -48,6 +51,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+//cors
+app.UseCors();
 
 app.UseHttpsRedirection();
 

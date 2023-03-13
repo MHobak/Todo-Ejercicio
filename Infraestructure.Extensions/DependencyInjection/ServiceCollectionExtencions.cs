@@ -59,5 +59,21 @@ namespace Infraestructure.Extensions.DependencyInjection
             services.AddSingleton(mapper);
             return services;
         }
+
+        public static IServiceCollection ConfigureCors(this IServiceCollection services)
+        {
+            services.AddCors(options =>
+            {
+                //Solo para el front
+                options.AddDefaultPolicy(builder =>
+                {
+                    builder.AllowAnyOrigin()
+                           .AllowAnyMethod()
+                           .AllowAnyHeader();
+                });
+            });
+
+            return services;
+        }
     }
 } 
