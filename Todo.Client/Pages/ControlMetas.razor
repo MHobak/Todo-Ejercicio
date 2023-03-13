@@ -1,13 +1,27 @@
-﻿@page "/fetchdata"
+﻿@page "/controlmetas"
 @inject HttpClient Http
 
-<PageTitle>Weather forecast</PageTitle>
 
-<h1>Weather forecast</h1>
+<PageTitle>Control de metas</PageTitle>
 
-<p>This component demonstrates fetching data from the server.</p>
+  <div class="row">
+    <div class="col-4">
+      <MetasListComponent/>
+    </div>
+    <div class="col-6">
+      <div class="card">
+        <div class="card-header">
+            Configurar plan de compensación
+        </div>
+            <div class="card-body">
+                
+            </div>
+        </div>
+    </div>
+  </div>
 
-@if (metas == null)
+
+@* @if (metas == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -38,17 +52,9 @@ else
             }
         </tbody>
     </table>
-}
+} *@
 
 @code {
 
-    [Inject]
-    private IMetaService metaService { get; set; }
 
-    private List<MetaDto>? metas;
-
-    protected override async Task OnInitializedAsync()
-    {
-        metas = await metaService.Get();
-    }
 }
