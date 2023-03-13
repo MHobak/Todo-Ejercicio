@@ -8,5 +8,6 @@
         public int TareasCompletadas { get; set; }
         public int TotalTareas { get; set; }
         public decimal PorcentajeCumplimiento { get; set; }
+        public string Porcentaje => String.Format("{0:P2}", (PorcentajeCumplimiento / 100));
     }
 }
