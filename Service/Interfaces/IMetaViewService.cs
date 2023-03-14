@@ -1,4 +1,5 @@
 ﻿using Domain.DTOs;
+using Infraestructure.Utils.Dto;
 
 namespace Service.Interfaces
 {
@@ -8,6 +9,13 @@ namespace Service.Interfaces
         /// Definición de método para todos los registros
         /// </summary>
         /// <returns>Objeto MetaDto</returns>
-        Task<IEnumerable<MetaDto>> GetAll();
+        Task<ResponseWrapper<IEnumerable<MetaDto>>> GetAll();
+
+        /// <summary>
+        /// Definición de método para obtener un registro por su identificador
+        /// </summary>
+        /// <param name="id">Identificador de la meta</param>
+        /// <returns>Objeto MetaDto</returns>
+        Task<MetaDto> GetById(int id);
     }
 }

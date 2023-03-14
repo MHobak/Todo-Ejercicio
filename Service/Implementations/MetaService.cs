@@ -4,6 +4,7 @@ using Domain.Entities;
 using Persistence.Interfaces.Generic;
 using Persistence.Interfaces.Repository;
 using Service.Interfaces;
+using Infraestructure.Exceptions;
 
 namespace Service.Implementations
 {
@@ -32,6 +33,10 @@ namespace Service.Implementations
         public async Task<MetaDto> GetById(int id)
         {
             var result = await repository.GetById(id);
+            if (result == null)
+            {
+                throw new NotFoundException();
+            }
             return mapper.Map<MetaDto>(result);
         }
 
@@ -40,6 +45,7 @@ namespace Service.Implementations
             unitOfWork.CreateTransaction();
 
             var meta = mapper.Map<Meta>(request);
+            meta.FechaCreacion = DateTime.Now;
             repository.Insert(meta);
             await unitOfWork.SaveAsync();
             await unitOfWork.CommitAsync();
@@ -47,14 +53,38 @@ namespace Service.Implementations
             return mapper.Map<MetaDto>(meta);
         }
 
-        public Task<MetaDto> Update(MetaDto request)
+        public async Task<MetaDto> Update(MetaDto request)
         {
-            throw new NotImplementedException();
+            unitOfWork.CreateTransaction();
+
+            if (!await repository.Any(x => x.Id == request.Id))
+            {
+                throw new NotFoundException();
+            }
+
+            var newMeta = mapper.Map<Meta>(request);
+            repository.Update(newMeta);
+            await unitOfWork.SaveAsync();
+            await unitOfWork.CommitAsync();
+
+            return mapper.Map<MetaDto>(newMeta);
         }
 
-        public Task<bool> DeleteById(int id)
+        public async Task<bool> DeleteById(int id)
         {
-            throw new NotImplementedException();
+            unitOfWork.CreateTransaction();
+
+            var meta = await repository.GetById(id);
+            if (meta == null)
+            {
+                throw new NotFoundException();
+            }
+            
+            repository.Delete(meta);
+            await unitOfWork.SaveAsync();
+            await unitOfWork.CommitAsync();
+
+            return true;
         }
     }
 }

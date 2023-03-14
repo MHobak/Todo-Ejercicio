@@ -16,32 +16,22 @@ namespace Todo.Client.Services.Implementations
             client.BaseAddress = new Uri(apiUri);
         }
 
-        public Task<HttpResponseMessage> DeleteAsync(string endpoint)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<HttpResponseMessage> DeleteAsync(string endpoint) =>
+            await client.DeleteAsync(endpoint);
 
         public async Task<T> GetAsync<T>(string endpoint) => 
             await client.GetFromJsonAsync<T>(endpoint);
 
-        public Task<HttpResponseMessage> PatchAsync(string endpoint, HttpContent content = null)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<HttpResponseMessage> PatchAsync(string endpoint, HttpContent content = null) =>
+            await client.PatchAsync(endpoint, content);
 
-        public Task<HttpResponseMessage> PostAsync<TValue>(string endpoint, TValue value)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<HttpResponseMessage> PostAsync<TValue>(string endpoint, TValue value) =>
+            await client.PostAsJsonAsync<TValue>(endpoint, value);
+        
+        public async Task<HttpResponseMessage> PutAsync<TValue>(string endpoint, TValue value) =>
+            await client.PutAsJsonAsync<TValue>(endpoint, value);
 
-        public Task<HttpResponseMessage> PutAsync<TValue>(string endpoint, TValue value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<HttpResponseMessage> SendAsync(HttpRequestMessage httpRequestMessage)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<HttpResponseMessage> SendAsync(HttpRequestMessage httpRequestMessage) => 
+            await client.SendAsync(httpRequestMessage);
     }
 }

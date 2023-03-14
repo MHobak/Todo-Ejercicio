@@ -1,0 +1,89 @@
+@inject ISnackbar Snackbar
+
+<MudDialog>
+    <DialogContent>
+        <MudPaper Class="pa-4" style="Width:400px">
+            <MudTextField Label="Nombre" HelperText="Max. 80 characters"
+                              @bind-Value="Model.Nombre" For="@(() => Model.Nombre)"/>
+        </MudPaper>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancelal</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit">@(Actualizar ? "Actualizar" : "Registrar")</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    
+    [Inject]
+    private IMetaService MetaService { get; set; }
+
+    [Parameter]
+    public Func<Task> OnSuccessCreateEditMethod { get; set; }
+    
+    [Parameter]
+    public bool Actualizar { get; set; } = false;
+
+    [Parameter]
+    public MetaDto Model { get; set; } = new();
+
+    async Task Submit()
+    {
+        if (Actualizar)
+        {
+            await UpdateMeta();
+        }
+        else 
+        {
+            await CreateMeta();
+        }
+        
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+    void Cancel() => MudDialog.Cancel();
+
+    public async Task CreateMeta()
+    {
+        try
+        {
+            var result = await MetaService.Create(Model);
+            if (result != null)
+            {
+                Model = result;
+                Snackbar.Add("¡Meta registrada!", Severity.Success);
+                OnSuccessCreateEditMethod?.Invoke();
+            }
+            else
+            {
+                Snackbar.Add("No se registró la tarea", Severity.Warning);
+            }
+        }
+        catch (System.Exception ex)
+        {
+            Snackbar.Add($"No se registró la tarea: {ex.Message}", Severity.Error);
+        }
+    }
+
+    public async Task UpdateMeta()
+    {
+        try
+        {
+            var result = await MetaService.Update(Model);
+            if (result != null)
+            {
+                Model = result;
+                Snackbar.Add("¡Meta actualizada!", Severity.Success);
+                OnSuccessCreateEditMethod?.Invoke();
+            }
+            else
+            {
+                Snackbar.Add("No se registró la tarea", Severity.Warning);
+            }
+        }
+        catch (System.Exception ex)
+        {
+            Snackbar.Add($"No se registró la tarea: {ex.Message}", Severity.Error);
+        }
+    }
+}

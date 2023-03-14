@@ -1,4 +1,5 @@
 using System.Net.Http.Json;
+using Infraestructure.Utils.Dto;
 using Todo.Client.Services.Interfaces;
 
 namespace Todo.Client.Services.Implementations
@@ -19,11 +20,11 @@ namespace Todo.Client.Services.Implementations
         /// </summary>
         /// <param name="route">Ruta de la api para consulta</param>
         /// <returns>Respuesta de la api</returns>
-        public async Task<List<T>> Get()
+        public async Task<ResponseWrapper<List<T>>> Get()
         {
             try
             {
-                var result = await webApiService.GetAsync<List<T>>(apiResourceRoute);
+                var result = await webApiService.GetAsync<ResponseWrapper<List<T>>>(apiResourceRoute);
                 return result;
             }
             catch (Exception ex)
@@ -40,7 +41,38 @@ namespace Todo.Client.Services.Implementations
             if (!response.IsSuccessStatusCode)
             {
                 var message = await response.Content.ReadAsStringAsync();
-                //do something
+                throw new Exception(message);
+            }
+
+            T result = await response.Content.ReadFromJsonAsync<T>();
+
+            return result;
+        }
+
+        public async Task Delete(int Id)
+        {
+            var response = await webApiService.DeleteAsync($"{apiResourceRoute}/{Id}");
+
+            if (!response.IsSuccessStatusCode)
+            {
+                var message = await response.Content.ReadAsStringAsync();
+                throw new Exception(message);
+            }
+        }
+
+        /// <summary>
+        /// Método para editar un registro
+        /// </summary>
+        /// <param name="value">Registro a actualizar</param>
+        /// <returns>Registro actualizado</returns>
+        public async Task<T> Update(T value)
+        {
+            var response = await webApiService.PutAsync<T>(apiResourceRoute, value);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                var message = await response.Content.ReadAsStringAsync();
+                throw new Exception(message);
             }
 
             T result = await response.Content.ReadFromJsonAsync<T>();

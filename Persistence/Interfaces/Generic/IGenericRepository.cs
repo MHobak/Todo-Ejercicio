@@ -5,6 +5,13 @@ namespace Persistence.Interfaces.Generic
     public interface IGenericRepository<T, TKey> where T : class
     {
         /// <summary>
+        /// Implementación de métod que obtiene todos los registros
+        /// de tipo T de la entidad de forma asíncrona
+        /// </summary>
+        /// <returns>IQueryable de tipo T </returns>
+        IQueryable<T> GetTable();
+
+        /// <summary>
         /// Definición de método para obtener 
         /// un elemento de tipo T por objeto identificador
         /// </summary>

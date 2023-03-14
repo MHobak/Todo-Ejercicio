@@ -3,7 +3,12 @@
 <MudCard Outlined="true">
     <MudCardHeader>
         <CardHeaderContent>
-            <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Add" Color="Color.Info">Nueva Tarea</MudButton>
+            <MudButton Variant="Variant.Filled" 
+            StartIcon="@Icons.Material.Filled.Add" 
+            class="blue-grey darken-1 shades-text text-white"
+            @onclick="OpenAddMetaDialog">
+                Nueva Tarea
+            </MudButton>
         </CardHeaderContent>
     </MudCardHeader>
     <MudCardContent>
@@ -21,20 +26,21 @@
                     }
                     foreach (var meta in metas)
                     {
+                        <MudDivider />
                         <MudListItem>
-                            <MudPaper Class="mud-transparent" Elevation="0">
+                            <div>
                                 <MudPaper Class="d-flex justify-space-between flex-grow-1 mud-transparent" Elevation="0">
                                     <div>
                                         <MudText Typo="Typo.h5">@meta.Nombre</MudText>
                                     </div>
                                     <div>
-                                        <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Medium"/>
-                                        <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Error" Size="Size.Medium"/>
+                                        <MudIconButton @onclick="(() => OpenUpdateMetaDialog(meta))" Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Medium"/>
+                                        <MudIconButton @onclick="(() => OpenDeleteMetaDialog(meta))" Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Error" Size="Size.Medium"/>
                                     </div>
                                 </MudPaper>
                                 <MudText Typo="Typo.subtitle1">Fecha creada: @meta.FechaCreacion.Date.ToString("dd/MM/yyyy")</MudText>
-                                <br>
-                                <MudPaper Class="d-flex justify-space-between flex-grow-1 mud-transparent" Elevation="0">
+                                <MudItem Class="py-1 my-1"></MudItem>
+                                <MudPaper Class="py-0 my-0 d-flex justify-space-between flex-grow-1 mud-transparent" Elevation="0">
                                     <div>
                                         <MudText Typo="Typo.body1">Tareas completadas: @meta.TareasCompletadas/@meta.TotalTareas</MudText>
                                     </div>
@@ -42,12 +48,15 @@
                                         <MudText Typo="Typo.body1">@meta.Porcentaje</MudText>
                                     </div>
                                 </MudPaper>
-                                <MudProgressLinear Color="Color.Primary" Striped="true" Size="Size.Large" Value="@Decimal.ToInt32(meta.PorcentajeCumplimiento)" Class="my-7" />
-                            </MudPaper>
+                                <MudProgressLinear Color="Color.Primary" Striped="true" Size="Size.Large" Value="@Decimal.ToInt32(meta.PorcentajeCumplimiento)" Class="py-1 my-1" />
+                            </div>
                         </MudListItem>
+                        <MudDivider />
                     }
                 }
             </MudList>
+            <MudPagination Variant="Variant.Outlined" Count="5" />
+            <br>
         </MudPaper>
     </MudCardContent>
 </MudCard>

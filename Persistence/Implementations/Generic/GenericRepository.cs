@@ -10,14 +10,16 @@ namespace Persistence.Implementations.Generic
         private readonly IUnitOfWork unitOfWork;
         internal DbSet<T> _dbSet;
 
+
         /// <summary>
-        /// Variable con acceso getter al IQueryable de la
-        /// tabla inicializada para ser utilizada por
-        /// repositorios hijos.
+        /// Implementación de métod que obtiene todos los registros
+        /// de tipo T de la entidad de forma síncrona
         /// </summary>
-        public virtual IQueryable<T> Table
+        /// <returns>IQueryable de tipo T </returns>
+        public IQueryable<T> GetTable()
         {
-            get { return _dbSet; }
+            var query = unitOfWork.Context.Set<T>().AsQueryable();
+            return query;
         }
 
         #endregion

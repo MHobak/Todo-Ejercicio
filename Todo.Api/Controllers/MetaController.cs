@@ -28,7 +28,7 @@ namespace Todo.Api.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var result = await metaService.GetById(id);
+            var result = await metaViewService.GetById(id);
 
             if (result == null)
             {
@@ -40,7 +40,6 @@ namespace Todo.Api.Controllers
 
         // POST: MetaController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(MetaDto request)
         {
             try
@@ -48,40 +47,40 @@ namespace Todo.Api.Controllers
                 var result = await metaService.Create(request);
                 return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);//retorna 201
             }
-            catch
+            catch(Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex.Message);
             }
         }
 
-        //// POST: MetaController/Edit/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public Task<IActionResult> Edit(MetaDto request)
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return BadRequest();
-        //    }
-        //}
+        // PUT: MetaController/Update/5
+        [HttpPut]
+        public async Task<IActionResult> Update(MetaDto request)
+        {
+            try
+            {
+                var result = await metaService.Update(request);
+                return Ok(result);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
-        //// POST: MetaController/Delete/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public Task<IActionResult> Delete(int id)
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return BadRequest();
-        //    }
-        //}
+        // DELETE: MetaController/Delete/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                var result = await metaService.DeleteById(id);
+                return Ok(result);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

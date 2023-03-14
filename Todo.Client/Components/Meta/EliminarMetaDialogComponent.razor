@@ -1,0 +1,48 @@
+@inject ISnackbar Snackbar
+<MudDialog>
+    <DialogContent>
+        <MudText>
+            Que desea eliminar el elemento @Meta.Nombre
+        </MudText>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Error" Variant="Variant.Filled" OnClick="Submit">Aceptar</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    [Inject]
+    private IMetaService MetaService { get; set; }
+
+    [Parameter]
+    public Func<Task> OnSuccessDeleteMethod { get; set; }
+
+    [Parameter] 
+    public MetaDto Meta { get; set; }
+
+    async Task Submit()
+    { 
+        await DeleteMeta();
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+    
+    void Cancel() => MudDialog.Cancel();
+
+    public async Task DeleteMeta()
+    {
+        try
+        {
+            await MetaService.Delete(Meta.Id);
+            Snackbar.Add("¡Meta eliminada!", Severity.Success);
+            
+            OnSuccessDeleteMethod?.Invoke();
+        }
+        catch (System.Exception ex)
+        {
+            Snackbar.Add($"No se registró la tarea: {ex.Message}", Severity.Error);
+        }
+    }
+}

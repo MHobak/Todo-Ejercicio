@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
 using Domain.DTOs;
-using Domain.Entities;
-using Persistence.Implementations.Repository;
-using Persistence.Interfaces.Generic;
+using Infraestructure.Utils.Dto;
+using Microsoft.EntityFrameworkCore;
 using Persistence.Interfaces.Repository;
 using Service.Interfaces;
 
@@ -22,10 +21,29 @@ namespace Service.Implementations
 
         #endregion
 
-        public async Task<IEnumerable<MetaDto>> GetAll()
+        public async Task<ResponseWrapper<IEnumerable<MetaDto>>> GetAll()
         {
-            var result = await repository.GetAsync();
-            return mapper.Map<IEnumerable<MetaDto>>(result);
+            var query = repository.GetTable();
+            var response = new ResponseWrapper<IEnumerable<MetaDto>>();
+            var result = await query
+                .Skip((response.PageNumber - 1) * response.PageSize)
+                .Take(response.PageSize).ToListAsync();
+
+            response.Data = mapper.Map<IEnumerable<MetaDto>>(result);
+            response.TotalItems = await query.CountAsync();
+
+            return response;
+        }
+
+        public async Task<MetaDto> GetById(int id)
+        {
+            var result = await repository.GetById(id);
+            if (result != null)
+            {
+                return mapper.Map<MetaDto>(result);
+            }
+
+            return null;
         }
     }
 }
