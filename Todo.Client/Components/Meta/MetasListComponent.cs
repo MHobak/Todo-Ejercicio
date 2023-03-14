@@ -18,7 +18,7 @@ namespace Todo.Client.Components.Meta
         [Inject]
         private ISnackbar Snackbar { get; set; }
 
-        protected ResponseWrapper<List<MetaDto>> response;
+        protected ResponseWrapper<List<MetaDto>> response = new();
 
         protected List<MetaDto>? metas;
 
