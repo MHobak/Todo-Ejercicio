@@ -18,7 +18,7 @@ namespace Todo.Client.Components.Meta
         [Inject]
         private ISnackbar Snackbar { get; set; }
 
-        protected ResponseWrapper<List<MetaDto>> response = new();
+        protected ResponseWrapper<List<MetaDto>> serverResponse = new();
 
         protected List<MetaDto>? metas;
 
@@ -66,11 +66,11 @@ namespace Todo.Client.Components.Meta
         {
             try
             {
-                var response = await metaService.Get();
+                serverResponse = await metaService.Get(serverResponse.PageNumber, serverResponse.PageSize);
 
-                if (response?.Data != null)
+                if (serverResponse?.Data != null)
                 {
-                    metas = response.Data;
+                    metas = serverResponse.Data;
                 }
             }
             catch (System.Exception)
@@ -80,5 +80,11 @@ namespace Todo.Client.Components.Meta
 
             StateHasChanged();
         }   
+
+        protected async Task PageChanged(int i)
+        {
+            serverResponse.PageNumber = i;
+            await GetMetas();
+        }
     }
 }

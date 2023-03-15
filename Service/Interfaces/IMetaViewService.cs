@@ -9,7 +9,7 @@ namespace Service.Interfaces
         /// Definición de método para todos los registros
         /// </summary>
         /// <returns>Objeto MetaDto</returns>
-        Task<ResponseWrapper<IEnumerable<MetaDto>>> GetAll();
+        Task<ResponseWrapper<IEnumerable<MetaDto>>> GetAll(int pageNumber, int pageSize);
 
         /// <summary>
         /// Definición de método para obtener un registro por su identificador

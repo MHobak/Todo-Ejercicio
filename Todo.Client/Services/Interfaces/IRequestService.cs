@@ -8,7 +8,7 @@ namespace Todo.Client.Services.Interfaces
         /// Método para obtener registros
         /// </summary>
         /// <returns>Respuesta de la api</returns>
-        Task<ResponseWrapper<List<T>>> Get();
+        Task<ResponseWrapper<List<T>>> Get(int pageNumber, int pageSize);
 
         /// <summary>
         /// Método para crear un nuevo registro

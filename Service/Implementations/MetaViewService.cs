@@ -21,10 +21,14 @@ namespace Service.Implementations
 
         #endregion
 
-        public async Task<ResponseWrapper<IEnumerable<MetaDto>>> GetAll()
+        public async Task<ResponseWrapper<IEnumerable<MetaDto>>> GetAll(int pageNumber, int pageSize)
         {
             var query = repository.GetTable();
+            
             var response = new ResponseWrapper<IEnumerable<MetaDto>>();
+            if(pageSize > 0 ) response.PageSize = pageSize;
+            if(pageNumber > 0 ) response.PageNumber = pageNumber;
+
             var result = await query
                 .Skip((response.PageNumber - 1) * response.PageSize)
                 .Take(response.PageSize).ToListAsync();

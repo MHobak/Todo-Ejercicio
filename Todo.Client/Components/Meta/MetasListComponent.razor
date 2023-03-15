@@ -55,8 +55,8 @@
                     }
                 }
             </MudList>
-            <MudPagination Variant="Variant.Outlined" Count="@response.PageSize" @bind-Selected="@response.PageNumber"/>
         </MudPaper>
-        <MudPagination Variant="Variant.Outlined" Count="@response.PageSize" @bind-Selected="@response.PageNumber"/>
+        <br>
+        <MudPagination Variant="Variant.Outlined" Count=@serverResponse.TotalPages SelectedChanged="PageChanged"/>
     </MudCardContent>
 </MudCard>

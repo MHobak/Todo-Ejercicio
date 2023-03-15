@@ -18,9 +18,9 @@ namespace Todo.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get(int pageNumber = 0, int pageSize = 0)
         {
-            var result = await metaViewService.GetAll();
+            var result = await metaViewService.GetAll(pageNumber, pageSize);
 
             return Ok(result);
         }

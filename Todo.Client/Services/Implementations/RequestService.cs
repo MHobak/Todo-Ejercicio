@@ -20,11 +20,15 @@ namespace Todo.Client.Services.Implementations
         /// </summary>
         /// <param name="route">Ruta de la api para consulta</param>
         /// <returns>Respuesta de la api</returns>
-        public async Task<ResponseWrapper<List<T>>> Get()
+        public async Task<ResponseWrapper<List<T>>> Get(int pageNumber = 0, int pageSize = 0)
         {
             try
             {
-                var result = await webApiService.GetAsync<ResponseWrapper<List<T>>>(apiResourceRoute);
+                string query = apiResourceRoute;
+                query += $"?pageNumber={pageNumber}";
+                query += $"&pageSize={pageSize}";
+
+                var result = await webApiService.GetAsync<ResponseWrapper<List<T>>>(query);
                 return result;
             }
             catch (Exception ex)
