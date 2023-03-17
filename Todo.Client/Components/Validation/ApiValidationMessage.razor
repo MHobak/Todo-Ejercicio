@@ -1,0 +1,26 @@
+@foreach (var errorMessage in Errors)
+{
+    <MudText Typo="Typo.caption" Color="Color.Error">@errorMessage</MudText>
+}
+
+@code{
+    [CascadingParameter] 
+    public IDictionary<string, string[]>? ValidationErrors { get; set; }
+
+    [Parameter]
+    public string? TextFor { get; set; }
+
+    private IEnumerable<string> Errors => GetPropetyErrors();
+
+    IEnumerable<string> GetPropetyErrors()
+    {
+
+    if (ValidationErrors != null && TextFor != null)
+        {
+            return ValidationErrors.Where(e => e.Key.ToLower() == TextFor.ToLower())
+            .SelectMany(e => e.Value).ToList();
+        }
+
+        return Enumerable.Empty<string>();
+    }
+}

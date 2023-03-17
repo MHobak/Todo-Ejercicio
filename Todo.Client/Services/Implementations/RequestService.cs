@@ -1,5 +1,6 @@
-using System.Net.Http.Json;
 using Infraestructure.Utils.Dto;
+using System.Net.Http.Json;
+using Todo.Client.Exceptions;
 using Todo.Client.Services.Interfaces;
 
 namespace Todo.Client.Services.Implementations
@@ -44,8 +45,16 @@ namespace Todo.Client.Services.Implementations
 
             if (!response.IsSuccessStatusCode)
             {
-                var message = await response.Content.ReadAsStringAsync();
-                throw new Exception(message);
+                var badResponse = await response.Content.ReadAsStringAsync();
+
+                var validationErrors = await response.Content.ReadFromJsonAsync<ValidationErrorResponse>();
+                if (validationErrors != null)
+                {
+                    throw new ValidationRuleException(validationErrors.Errors);
+                }
+
+                Console.WriteLine(badResponse);
+                throw new Exception(badResponse);
             }
 
             T result = await response.Content.ReadFromJsonAsync<T>();
@@ -75,8 +84,16 @@ namespace Todo.Client.Services.Implementations
 
             if (!response.IsSuccessStatusCode)
             {
-                var message = await response.Content.ReadAsStringAsync();
-                throw new Exception(message);
+                var badResponse = await response.Content.ReadAsStringAsync();
+
+                var validationErrors = await response.Content.ReadFromJsonAsync<ValidationErrorResponse>();
+                if (validationErrors != null)
+                {
+                    throw new ValidationRuleException(validationErrors.Errors);
+                }
+
+                Console.WriteLine(badResponse);
+                throw new Exception(badResponse);
             }
 
             T result = await response.Content.ReadFromJsonAsync<T>();

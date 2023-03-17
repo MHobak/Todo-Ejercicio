@@ -1,6 +1,10 @@
 ﻿using Domain.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Service.Interfaces;
+using Service.Validators;
+using FluentValidation;
+using Infraestructure.Extensions.ValidationErros;
+using Infraestructure.Utils.Dto;
 
 namespace Todo.Api.Controllers
 {
@@ -10,11 +14,13 @@ namespace Todo.Api.Controllers
     {
         private readonly IMetaService metaService;
         private readonly IMetaViewService metaViewService;
+        private readonly IValidator<MetaDto> metaValidator;
 
-        public MetaController(IMetaService metaService, IMetaViewService metaViewService)
+        public MetaController(IMetaService metaService, IMetaViewService metaViewService, IValidator<MetaDto> metaValidator)
         {
             this.metaService = metaService ?? throw new ArgumentNullException(nameof(metaService));
             this.metaViewService = metaViewService ?? throw new ArgumentNullException(nameof(metaViewService));
+            this.metaValidator = metaValidator ?? throw new ArgumentNullException(nameof(metaValidator));
         }
 
         [HttpGet]
@@ -44,6 +50,18 @@ namespace Todo.Api.Controllers
         {
             try
             {
+                var validationResult = await metaValidator.ValidateAsync(request);
+
+                if (!validationResult.IsValid)
+                {
+                    var validationErrors = new ValidationErrorResponse
+                    {
+                        Errors = validationResult.Errors.GroupValidationErrors()
+                    };
+
+                    return BadRequest(validationErrors);
+                }
+
                 var result = await metaService.Create(request);
                 return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);//retorna 201
             }
@@ -59,6 +77,18 @@ namespace Todo.Api.Controllers
         {
             try
             {
+                var validationResult = await metaValidator.ValidateAsync(request);
+
+                if (!validationResult.IsValid)
+                {
+                    var validationErrors = new ValidationErrorResponse
+                    {
+                        Errors = validationResult.Errors.GroupValidationErrors()
+                    };
+
+                    return BadRequest(validationErrors);
+                }
+
                 var result = await metaService.Update(request);
                 return Ok(result);
             }

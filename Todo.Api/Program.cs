@@ -18,16 +18,17 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSqlServerDbContext(builder.Configuration.GetConnectionString("DBConnection"));
 builder.Services.AddRepositoryDependency();
 builder.Services.AddServiceDependency();
+builder.Services.AddValidatorsDependency();
 builder.Services.AddMappers();
 
-//configuración para CORS
+//configuraciï¿½n para CORS
 builder.Services.ConfigureCors();
 
 #endregion
 
 var app = builder.Build();
 
-//Seed database - insercción de datos por defecto
+//Seed database - insercciï¿½n de datos por defecto
 using (var scope = app.Services.CreateScope())
 {
 	var services = scope.ServiceProvider;

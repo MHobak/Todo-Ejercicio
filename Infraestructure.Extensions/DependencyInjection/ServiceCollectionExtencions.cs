@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Domain.DTOs;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Persistence;
@@ -8,6 +10,7 @@ using Persistence.Interfaces.Generic;
 using Persistence.Interfaces.Repository;
 using Service.Implementations;
 using Service.Interfaces;
+using Service.Validators;
 
 namespace Infraestructure.Extensions.DependencyInjection
 {
@@ -43,6 +46,13 @@ namespace Infraestructure.Extensions.DependencyInjection
         {
             services.AddScoped<IMetaService, MetaService>();
             services.AddScoped<IMetaViewService, MetaViewService>();
+
+            return services;
+        }
+
+        public static IServiceCollection AddValidatorsDependency(this IServiceCollection services)
+        {
+            services.AddTransient<IValidator<MetaDto>, MetaValidator>();
 
             return services;
         }
