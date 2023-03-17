@@ -9,23 +9,21 @@ namespace Todo.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class MetaController : ControllerBase
+    public class TareaController : ControllerBase
     {
-        private readonly IMetaService metaService;
-        private readonly IMetaViewService metaViewService;
-        private readonly IValidator<MetaDto> metaValidator;
+        private readonly ITareaService tareaService;
+        private readonly IValidator<TareaDto> tareaValidator;
 
-        public MetaController(IMetaService metaService, IMetaViewService metaViewService, IValidator<MetaDto> metaValidator)
+        public TareaController(ITareaService tareaService, IValidator<TareaDto> tareaValidator)
         {
-            this.metaService = metaService ?? throw new ArgumentNullException(nameof(metaService));
-            this.metaViewService = metaViewService ?? throw new ArgumentNullException(nameof(metaViewService));
-            this.metaValidator = metaValidator ?? throw new ArgumentNullException(nameof(metaValidator));
+            this.tareaService = tareaService ?? throw new ArgumentNullException(nameof(tareaService));
+            this.tareaValidator = tareaValidator ?? throw new ArgumentNullException(nameof(tareaValidator));
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get(int pageNumber = 0, int pageSize = 0)
+        public async Task<IActionResult> Get()
         {
-            var result = await metaViewService.GetAll(pageNumber, pageSize);
+            var result = await tareaService.GetAll();
 
             return Ok(result);
         }
@@ -33,7 +31,7 @@ namespace Todo.Api.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var result = await metaViewService.GetById(id);
+            var result = await tareaService.GetById(id);
 
             if (result == null)
             {
@@ -43,13 +41,13 @@ namespace Todo.Api.Controllers
             return Ok(result);
         }
 
-        // POST: MetaController/Create
+        // POST: TareaController/Create
         [HttpPost]
-        public async Task<IActionResult> Create(MetaDto request)
+        public async Task<IActionResult> Create(TareaDto request)
         {
             try
             {
-                var validationResult = await metaValidator.ValidateAsync(request);
+                var validationResult = await tareaValidator.ValidateAsync(request);
 
                 if (!validationResult.IsValid)
                 {
@@ -61,7 +59,7 @@ namespace Todo.Api.Controllers
                     return BadRequest(validationErrors);
                 }
 
-                var result = await metaService.Create(request);
+                var result = await tareaService.Create(request);
                 return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);//retorna 201
             }
             catch(Exception ex)
@@ -70,13 +68,13 @@ namespace Todo.Api.Controllers
             }
         }
 
-        // PUT: MetaController/Update/5
+        // PUT: TareaController/Update/5
         [HttpPut]
-        public async Task<IActionResult> Update(MetaDto request)
+        public async Task<IActionResult> Update(TareaDto request)
         {
             try
             {
-                var validationResult = await metaValidator.ValidateAsync(request);
+                var validationResult = await tareaValidator.ValidateAsync(request);
 
                 if (!validationResult.IsValid)
                 {
@@ -88,7 +86,7 @@ namespace Todo.Api.Controllers
                     return BadRequest(validationErrors);
                 }
 
-                var result = await metaService.Update(request);
+                var result = await tareaService.Update(request);
                 return Ok(result);
             }
             catch(Exception ex)
@@ -97,13 +95,13 @@ namespace Todo.Api.Controllers
             }
         }
 
-        // DELETE: MetaController/Delete/5
+        // DELETE: TareaController/Delete/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             try
             {
-                var result = await metaService.DeleteById(id);
+                var result = await tareaService.DeleteById(id);
                 return Ok(result);
             }
             catch(Exception ex)

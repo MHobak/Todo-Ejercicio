@@ -5,7 +5,7 @@ namespace Domain.Entities
     public class Tarea
     {
         public int Id { get; set; }
-        public string Nombre { get; set; }
+        public string Nombre { get; set; } = string.Empty;
         public DateTime FechaCreacion { get; set; }
         public bool EsImportante { get; set; }
         public EstadoTarea Estado { get; set; }

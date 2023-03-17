@@ -14,6 +14,7 @@ namespace Service.Implementations
         private readonly IMapper mapper;
         private readonly IMetaRepository repository;
         private readonly IUnitOfWork unitOfWork;
+        #endregion
 
         public MetaService(IMapper mapper, IMetaRepository repository, IUnitOfWork unitOfWork)
         {
@@ -21,8 +22,6 @@ namespace Service.Implementations
             this.repository = repository ?? throw new ArgumentNullException(nameof(repository));
             this.unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
         }
-
-        #endregion
 
         public async Task<IEnumerable<MetaDto>> GetAll()
         {

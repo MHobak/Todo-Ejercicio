@@ -46,6 +46,7 @@ namespace Infraestructure.Extensions.DependencyInjection
         {
             services.AddScoped<IMetaService, MetaService>();
             services.AddScoped<IMetaViewService, MetaViewService>();
+            services.AddScoped<ITareaService, TareaService>();
 
             return services;
         }
@@ -53,6 +54,7 @@ namespace Infraestructure.Extensions.DependencyInjection
         public static IServiceCollection AddValidatorsDependency(this IServiceCollection services)
         {
             services.AddTransient<IValidator<MetaDto>, MetaValidator>();
+            services.AddTransient<IValidator<TareaDto>, TareaValidator>();
 
             return services;
         }
@@ -74,7 +76,7 @@ namespace Infraestructure.Extensions.DependencyInjection
         {
             services.AddCors(options =>
             {
-                //Solo para el front
+                //Solo para pruebas, permitir cualquier origen
                 options.AddDefaultPolicy(builder =>
                 {
                     builder.AllowAnyOrigin()
