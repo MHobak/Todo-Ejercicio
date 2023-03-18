@@ -16,6 +16,7 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 
 builder.Services.AddScoped<IWebApiService, WebApiService>();
 builder.Services.AddScoped<IMetaService, MetaService>();
+builder.Services.AddScoped<ITareaService, TareaService>();
 
 
 await builder.Build().RunAsync();

@@ -15,7 +15,12 @@ namespace Service.Interfaces
         /// Definición de método para todos los registros
         /// </summary>
         /// <returns>Objeto TareaDto</returns>
-        Task<ResponseWrapper<IEnumerable<TareaDto>>> GetAll(int pageNumber, int pageSize);
+        Task<ResponseWrapper<IEnumerable<TareaDto>>> GetAll(
+            int pageNumber, 
+            int pageSize, 
+            string sortColumn, 
+            string sortOrder, 
+            string SearchTerm);
 
         /// <summary>
         /// Definición de método para todos los registros

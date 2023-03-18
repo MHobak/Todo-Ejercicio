@@ -1,11 +1,11 @@
 using Domain.DTOs;
-using Domain.Entities;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using Todo.Client.Exceptions;
 using Todo.Client.Services.Interfaces;
 
-namespace Todo.Client.Components.Meta{
+namespace Todo.Client.Components.Meta
+{
     public class AgregarEditarMetaDialogComponentBase : ComponentBase
     {
         [CascadingParameter] 

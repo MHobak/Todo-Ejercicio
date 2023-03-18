@@ -21,9 +21,18 @@ namespace Todo.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get(
+            [FromQuery] int pageNumber = 1,
+            [FromQuery] int pageSize = 5,
+            [FromQuery] string sortColumn = "Nombre",
+            [FromQuery] string sortOrder = "Ascending",
+            [FromQuery] string SearchTerm = "")
         {
-            var result = await tareaService.GetAll();
+            var result = await tareaService.GetAll(pageNumber, 
+            pageSize, 
+            sortColumn, 
+            sortOrder, 
+            SearchTerm);
 
             return Ok(result);
         }

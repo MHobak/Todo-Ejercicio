@@ -1,0 +1,48 @@
+@inherits TareasListComponentBase
+
+<style>
+    .selected {
+        background-color: #1E88E5 !important;
+    }
+
+        .selected > td {
+            color: white !important;
+        }
+
+            .selected > td .mud-input {
+                color: white !important;
+            }
+</style>
+
+<MudTable ServerData="@(new Func<TableState, Task<TableData<TareaDto>>>(ServerReload))"
+          Dense="true" Hover="true" @ref="mudTable" RowsPerPage="5" SelectedRow="@selectedRow">
+        <ToolBarContent>
+        <MudText Typo="Typo.h6">Tareas de la meta: meta..</MudText>
+        <MudSpacer />
+        <MudTextField T="string" OnDebounceIntervalElapsed="@(s=>OnSearch(s))" DebounceInterval="500" Placeholder="Search" Adornment="Adornment.Start"
+                      AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh><MudTableSortLabel SortLabel="Id" T="TareaDto">Id</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortLabel="Nombre" T="TareaDto">Nombre</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortLabel="FechaCreacion" T="TareaDto">Fecha</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortLabel="Estado" T="TareaDto">Estado</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortLabel="EsImportante" T="TareaDto">Importante</MudTableSortLabel></MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Id">@context.Id</MudTd>
+        <MudTd DataLabel="Nombre">@context.Nombre</MudTd>
+        <MudTd DataLabel="Fecha">@context.FechaCreacion</MudTd>
+        <MudTd DataLabel="Estado">@context.Estado</MudTd>
+        <MudTd DataLabel="Importante">@context.EsImportante</MudTd>
+    </RowTemplate>
+    <NoRecordsContent>
+        <MudText>No se encontraron registros</MudText>
+    </NoRecordsContent>
+    <LoadingContent>
+        <MudText>Cargando...</MudText>
+    </LoadingContent>
+    <PagerContent>
+        <MudTablePager PageSizeOptions="@pageSizeOption" RowsPerPageString="Tareas por pagina" />
+    </PagerContent>
+</MudTable>

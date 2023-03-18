@@ -10,6 +10,7 @@ namespace Domain.DTOs
         
         public bool EsImportante { get; set; }
         public EstadoTarea Estado { get; set; }
+        public string NombreEstado => Estado.ToString();
 
         public int MetaId { get; set; }
     }

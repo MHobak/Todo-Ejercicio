@@ -75,7 +75,7 @@ namespace Todo.Client.Components.Meta
             }
             catch (System.Exception)
             {
-                Snackbar.Add("No pudo obtener las metas", Severity.Error);
+                Snackbar.Add("No se pudo obtener las metas", Severity.Error);
             }
 
             StateHasChanged();

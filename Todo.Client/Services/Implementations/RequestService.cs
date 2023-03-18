@@ -1,5 +1,7 @@
 using Infraestructure.Utils.Dto;
 using System.Net.Http.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Todo.Client.Exceptions;
 using Todo.Client.Services.Interfaces;
 
@@ -7,7 +9,7 @@ namespace Todo.Client.Services.Implementations
 {
     public class RequestService<T> : IRequestService<T>
     {
-        private readonly IWebApiService webApiService;
+        protected readonly IWebApiService webApiService;
         protected readonly string apiResourceRoute;
 
         public RequestService(IWebApiService webApiService, string route)
@@ -28,14 +30,13 @@ namespace Todo.Client.Services.Implementations
                 string query = apiResourceRoute;
                 query += $"?pageNumber={pageNumber}";
                 query += $"&pageSize={pageSize}";
-
+                
                 var result = await webApiService.GetAsync<ResponseWrapper<List<T>>>(query);
                 return result;
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
-                throw;
+                throw new Exception(ex.Message);
             }
         }
 

@@ -7,6 +7,7 @@ using Persistence.Interfaces.Generic;
 using Infraestructure.Exceptions;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Domain.Enums;
 
 namespace Service.Implementations
 {
@@ -31,10 +32,36 @@ namespace Service.Implementations
             return mapper.Map<IEnumerable<TareaDto>>(result);
         }
 
-        public async Task<ResponseWrapper<IEnumerable<TareaDto>>> GetAll(int pageNumber, int pageSize)
+        public async Task<ResponseWrapper<IEnumerable<TareaDto>>> GetAll(
+            int pageNumber, 
+            int pageSize, 
+            string sortColumn, 
+            string sortOrder, 
+            string searchTerm)
         {
             var query = repository.GetTable();
+
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                query = query.Where(x => 
+                    x.Nombre.ToLower().Contains(searchTerm.ToLower())
+                    // x.FechaCreacion.ToString().ToLower().Contains(searchTerm) ||
+                    //x.Estado.ToString().ToLower().Contains(searchTerm.ToLower())
+                );
+            }
             
+            if (!string.IsNullOrWhiteSpace(sortColumn))
+            {
+                if(sortOrder == "Descending")
+                {
+                    query = query.OrderByDescending(x => EF.Property<object>(x, sortColumn));
+                }
+                else
+                {
+                    query = query.OrderBy(x => EF.Property<object>(x, sortColumn));
+                }
+            }
+
             var response = new ResponseWrapper<IEnumerable<TareaDto>>();
             if(pageSize > 0 ) response.PageSize = pageSize;
             if(pageNumber > 0 ) response.PageNumber = pageNumber;
