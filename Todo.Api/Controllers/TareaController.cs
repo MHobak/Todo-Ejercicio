@@ -22,13 +22,16 @@ namespace Todo.Api.Controllers
 
         [HttpGet]
         public async Task<IActionResult> Get(
+            [FromQuery] int metaId = 0,
             [FromQuery] int pageNumber = 1,
             [FromQuery] int pageSize = 5,
             [FromQuery] string sortColumn = "Nombre",
             [FromQuery] string sortOrder = "Ascending",
             [FromQuery] string SearchTerm = "")
         {
-            var result = await tareaService.GetAll(pageNumber, 
+            var result = await tareaService.GetAll(
+            metaId,
+            pageNumber, 
             pageSize, 
             sortColumn, 
             sortOrder, 

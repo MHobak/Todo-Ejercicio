@@ -19,6 +19,7 @@ namespace Todo.Client.Services.Implementations
         /// </summary>
         /// <returns>Respuesta de la api</returns>
         public async Task<ResponseWrapper<List<TareaDto>>> Get(
+            int metaId,
             int pageNumber, 
             int pageSize , 
             string sortColumn,
@@ -27,6 +28,7 @@ namespace Todo.Client.Services.Implementations
         {
             var queryStringParam = new Dictionary<string, string>
             {
+                ["metaId"] = metaId.ToString(),
                 ["pageNumber"] = pageNumber.ToString(),
                 ["pageSize"] = pageSize.ToString(),
                 ["sortColumn"] = sortColumn ?? "Nombre",

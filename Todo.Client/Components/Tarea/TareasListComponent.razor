@@ -17,7 +17,7 @@
 <MudTable ServerData="@(new Func<TableState, Task<TableData<TareaDto>>>(ServerReload))"
           Dense="true" Hover="true" @ref="mudTable" RowsPerPage="5" SelectedRow="@selectedRow">
         <ToolBarContent>
-        <MudText Typo="Typo.h6">Tareas de la meta: meta..</MudText>
+        <MudText Typo="Typo.h6">@(string.IsNullOrWhiteSpace(NombreMeta) ? "Seleccione una Meta" : "Tareas de " + NombreMeta)</MudText>
         <MudSpacer />
         <MudTextField T="string" OnDebounceIntervalElapsed="@(s=>OnSearch(s))" DebounceInterval="500" Placeholder="Search" Adornment="Adornment.Start"
                       AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
@@ -37,7 +37,14 @@
         <MudTd DataLabel="Importante">@context.EsImportante</MudTd>
     </RowTemplate>
     <NoRecordsContent>
-        <MudText>No se encontraron registros</MudText>
+        @if (MetaId > 0)
+        {
+            <MudText>No se encontraron registros</MudText>
+        }
+        else
+        {
+            <MudText>Seleccione una meta para ver sus tareas</MudText>
+        }
     </NoRecordsContent>
     <LoadingContent>
         <MudText>Cargando...</MudText>

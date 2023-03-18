@@ -18,6 +18,12 @@ namespace Todo.Client.Components.Meta
         [Inject]
         private ISnackbar Snackbar { get; set; }
 
+        [Parameter]
+        public EventCallback OnMetaSelectedItem { get; set; }
+
+        public int SelectedMetaId { get; set; }
+        public MetaDto SelectedMeta { get; set; }
+
         protected ResponseWrapper<List<MetaDto>> serverResponse = new();
 
         protected List<MetaDto>? metas;
@@ -85,6 +91,14 @@ namespace Todo.Client.Components.Meta
         {
             serverResponse.PageNumber = i;
             await GetMetas();
+        }
+
+        public void SelectionChanged(Object item)
+        {
+            SelectedMetaId = Convert.ToInt32(item);
+            SelectedMeta = metas.FirstOrDefault(x => x.Id == SelectedMetaId);
+            Console.WriteLine("Metas selection chaanged " + SelectedMetaId);
+            OnMetaSelectedItem.InvokeAsync();
         }
     }
 }

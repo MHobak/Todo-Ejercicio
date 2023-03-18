@@ -16,17 +16,12 @@ namespace Service.Interfaces
         /// </summary>
         /// <returns>Objeto TareaDto</returns>
         Task<ResponseWrapper<IEnumerable<TareaDto>>> GetAll(
+            int metaId,
             int pageNumber, 
             int pageSize, 
             string sortColumn, 
             string sortOrder, 
             string SearchTerm);
-
-        /// <summary>
-        /// Definición de método para todos los registros
-        /// </summary>
-        /// <returns>Objeto TareaDto</returns>
-        Task<ResponseWrapper<IEnumerable<TareaDto>>> GetAllFromMeta(int metaId,int pageNumber, int pageSize);
 
         /// <summary>
         /// Definición de método para obtener un registro por su identificador

@@ -10,7 +10,7 @@
 </MudPaper>
 <MudGrid Spacing="1" class="pa-2">
     <MudItem xs="4">
-        <MetasListComponent/>
+        <MetasListComponent @ref="metasListComponent" OnMetaSelectedItem="RefreshTareas"/>
     </MudItem>
     <MudItem xs="8" >
         <MudCard Width="100%">
@@ -20,8 +20,23 @@
                 </CardHeaderContent>
             </MudCardHeader>
             <MudCardContent>
-                <TareasListComponent/>
+                <TareasListComponent @ref="tareasListComponent"/>
             </MudCardContent>
         </MudCard>
     </MudItem>
 </MudGrid>
+
+@code{
+    private MetasListComponent metasListComponent;
+
+    private TareasListComponent tareasListComponent;
+
+    public void RefreshTareas()
+    {
+        tareasListComponent.MetaId = metasListComponent.SelectedMetaId;
+        tareasListComponent.NombreMeta = metasListComponent.SelectedMeta.Nombre;
+        tareasListComponent.ReloadTareasTable();
+
+        Console.WriteLine($"Recargar tareas de meta con Id {metasListComponent.SelectedMetaId}");
+    }
+}

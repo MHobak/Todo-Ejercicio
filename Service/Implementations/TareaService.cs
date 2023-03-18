@@ -7,7 +7,6 @@ using Persistence.Interfaces.Generic;
 using Infraestructure.Exceptions;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using Domain.Enums;
 
 namespace Service.Implementations
 {
@@ -33,13 +32,14 @@ namespace Service.Implementations
         }
 
         public async Task<ResponseWrapper<IEnumerable<TareaDto>>> GetAll(
+            int metaId,
             int pageNumber, 
             int pageSize, 
             string sortColumn, 
             string sortOrder, 
             string searchTerm)
         {
-            var query = repository.GetTable();
+            var query = repository.GetTable().Where(x => x.MetaId == metaId);
 
             if (!string.IsNullOrWhiteSpace(searchTerm))
             {
@@ -62,25 +62,6 @@ namespace Service.Implementations
                 }
             }
 
-            var response = new ResponseWrapper<IEnumerable<TareaDto>>();
-            if(pageSize > 0 ) response.PageSize = pageSize;
-            if(pageNumber > 0 ) response.PageNumber = pageNumber;
-
-            var result = await query
-                .Skip((response.PageNumber - 1) * response.PageSize)
-                .Take(response.PageSize).ToListAsync();
-
-            response.Data = mapper.Map<IEnumerable<TareaDto>>(result);
-            response.TotalItems = await query.CountAsync();
-
-            return response;
-        }
-
-        public async Task<ResponseWrapper<IEnumerable<TareaDto>>> GetAllFromMeta(int metaId, int pageNumber, int pageSize)
-        {
-            //filtrar por meta
-            var query = repository.GetTable().Where(x => x.MetaId == metaId);
-            
             var response = new ResponseWrapper<IEnumerable<TareaDto>>();
             if(pageSize > 0 ) response.PageSize = pageSize;
             if(pageNumber > 0 ) response.PageNumber = pageNumber;

@@ -10,6 +10,7 @@ namespace Todo.Client.Services.Interfaces
         /// </summary>
         /// <returns>Respuesta de la api</returns>
         Task<ResponseWrapper<List<TareaDto>>> Get(
+            int metaId,
             int pageNumber, 
             int pageSize , 
             string sortColumn,

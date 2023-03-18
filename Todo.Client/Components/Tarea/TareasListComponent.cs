@@ -17,6 +17,9 @@ namespace Todo.Client.Components.Tarea
         [Inject]
         private ISnackbar Snackbar { get; set; }
 
+        public int MetaId { get; set; }
+        public string NombreMeta { get; set; }
+
         protected ResponseWrapper<List<TareaDto>> serverResponse = new();
         
         protected MudTable<TareaDto> mudTable;
@@ -26,14 +29,6 @@ namespace Todo.Client.Components.Tarea
         private int selectedRowNumber = -1;
         protected TareaDto selectedRow;
 
-        protected async override Task OnInitializedAsync()
-        {
-            if (mudTable != null)
-            {
-                await mudTable.ReloadServerData();
-            }
-        }
-
         /// <summary>
         /// Consulta para obtener tareas utilizando paginación y filtros
         /// </summary>
@@ -41,14 +36,16 @@ namespace Todo.Client.Components.Tarea
         {
             try
             {
-                serverResponse = await tareaService.Get(
+                if (MetaId > 0)
+                {
+                    serverResponse = await tareaService.Get(
+                    MetaId,
                     state.Page + 1, 
                     state.PageSize,
                     state.SortLabel,
                     state.SortDirection == SortDirection.None ? SortDirection.Ascending.ToString() : state.SortDirection.ToString(),
-                    searchString);
-
-                    Console.WriteLine($"SortDirection: {state.SortDirection}, SortLabel: {state.SortLabel}");
+                    searchString);   
+                }
             }
             catch (System.Exception)
             {
@@ -89,6 +86,11 @@ namespace Todo.Client.Components.Tarea
             {
                 return string.Empty;
             }
+        }
+
+        public void ReloadTareasTable()
+        {
+            mudTable.ReloadServerData();
         }
     }
 }
