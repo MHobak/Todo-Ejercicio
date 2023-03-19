@@ -27,7 +27,9 @@ namespace Todo.Api.Controllers
             [FromQuery] int pageSize = 5,
             [FromQuery] string sortColumn = "Nombre",
             [FromQuery] string sortOrder = "Ascending",
-            [FromQuery] string SearchTerm = "")
+            [FromQuery] string SearchTerm = "",
+            [FromQuery] string fecha = "",
+            [FromQuery] string estado = "")
         {
             var result = await tareaService.GetAll(
             metaId,
@@ -35,7 +37,9 @@ namespace Todo.Api.Controllers
             pageSize, 
             sortColumn, 
             sortOrder, 
-            SearchTerm);
+            SearchTerm,
+            fecha,
+            estado);
 
             return Ok(result);
         }

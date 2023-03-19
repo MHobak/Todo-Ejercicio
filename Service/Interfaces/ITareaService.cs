@@ -21,7 +21,9 @@ namespace Service.Interfaces
             int pageSize, 
             string sortColumn, 
             string sortOrder, 
-            string SearchTerm);
+            string SearchTerm,
+            string fecha,
+            string estado);
 
         /// <summary>
         /// Definición de método para obtener un registro por su identificador

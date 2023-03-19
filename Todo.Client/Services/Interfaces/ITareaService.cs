@@ -15,6 +15,8 @@ namespace Todo.Client.Services.Interfaces
             int pageSize , 
             string sortColumn,
             string sortOrder,
-            string searchTerm);
+            string searchTerm,
+            string fecha,
+            string estado);
     }
 }

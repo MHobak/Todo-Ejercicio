@@ -7,6 +7,7 @@ using Persistence.Interfaces.Generic;
 using Infraestructure.Exceptions;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Domain.Enums;
 
 namespace Service.Implementations
 {
@@ -37,7 +38,9 @@ namespace Service.Implementations
             int pageSize, 
             string sortColumn, 
             string sortOrder, 
-            string searchTerm)
+            string searchTerm,
+            string fecha,
+            string estado)
         {
             var query = repository.GetTable().Where(x => x.MetaId == metaId);
 
@@ -45,9 +48,27 @@ namespace Service.Implementations
             {
                 query = query.Where(x => 
                     x.Nombre.ToLower().Contains(searchTerm.ToLower())
-                    // x.FechaCreacion.ToString().ToLower().Contains(searchTerm) ||
-                    //x.Estado.ToString().ToLower().Contains(searchTerm.ToLower())
                 );
+            }
+
+            if (!string.IsNullOrWhiteSpace(fecha))
+            {
+                var newDate = Convert.ToDateTime(fecha);
+                var minDate = newDate.Date;
+                var maxDate = newDate.Date.AddDays(1).AddSeconds(-1);
+
+                query = query.Where(x => 
+                    x.FechaCreacion >= minDate &&
+                    x.FechaCreacion <= maxDate
+                );
+            }
+
+            if (!string.IsNullOrWhiteSpace(estado))
+            {
+                EstadoTarea newEstado;
+                Enum.TryParse<EstadoTarea>(estado, out newEstado);
+
+                query = query.Where(x => x.Estado == newEstado);
             }
             
             if (!string.IsNullOrWhiteSpace(sortColumn))

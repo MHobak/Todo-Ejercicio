@@ -97,7 +97,6 @@ namespace Todo.Client.Components.Meta
         {
             SelectedMetaId = Convert.ToInt32(item);
             SelectedMeta = metas.FirstOrDefault(x => x.Id == SelectedMetaId);
-            Console.WriteLine("Metas selection chaanged " + SelectedMetaId);
             OnMetaSelectedItem.InvokeAsync();
         }
     }

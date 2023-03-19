@@ -24,7 +24,9 @@ namespace Todo.Client.Services.Implementations
             int pageSize , 
             string sortColumn,
             string sortOrder,
-            string searchTerm)
+            string searchTerm,
+            string fecha,
+            string estado)
         {
             var queryStringParam = new Dictionary<string, string>
             {
@@ -33,7 +35,9 @@ namespace Todo.Client.Services.Implementations
                 ["pageSize"] = pageSize.ToString(),
                 ["sortColumn"] = sortColumn ?? "Nombre",
                 ["sortOrder"] = sortOrder ?? "Ascending",
-                ["searchTerm"] = searchTerm ?? ""
+                ["searchTerm"] = searchTerm ?? "",
+                ["fecha"] = fecha ?? "",
+                ["estado"] = estado ?? ""
             };
 
             try

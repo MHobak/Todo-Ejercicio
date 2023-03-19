@@ -8,6 +8,7 @@ namespace Todo.Client.Components.Tarea
 {
     public class TareasListComponentBase : ComponentBase
     {
+        #region Varaiables
         [Inject]
         protected ITareaService tareaService { get; set; }
 
@@ -26,8 +27,11 @@ namespace Todo.Client.Components.Tarea
 
         protected readonly int[] pageSizeOption = { 2, 5, 10, 15, 20 };
         private string searchString;
+        private string estadoString;
+        private string fechaString;
         private int selectedRowNumber = -1;
         protected TareaDto selectedRow;
+        #endregion
 
         /// <summary>
         /// Consulta para obtener tareas utilizando paginación y filtros
@@ -40,11 +44,13 @@ namespace Todo.Client.Components.Tarea
                 {
                     serverResponse = await tareaService.Get(
                     MetaId,
-                    state.Page + 1, 
+                    state.Page + 1, //la propiedad del componente es idex basado en 0
                     state.PageSize,
                     state.SortLabel,
                     state.SortDirection == SortDirection.None ? SortDirection.Ascending.ToString() : state.SortDirection.ToString(),
-                    searchString);   
+                    searchString,
+                    fechaString,
+                    estadoString);   
                 }
             }
             catch (System.Exception)
@@ -65,7 +71,27 @@ namespace Todo.Client.Components.Tarea
             searchString = text;
             mudTable.ReloadServerData();
         }
+
+        /// <summary>
+        /// Método para actualizar la fecha seleccionada
+        /// </summary>
+        /// <param name="date">Fecha</param>
+        protected void OnPickDate(DateTime? date)
+        {
+            fechaString = date is not null ? date?.ToString("MM/dd/yyyy") : string.Empty;
+            mudTable.ReloadServerData();
+        }
         
+        /// <summary>
+        ///  Método para actualizar el estado seleccionado
+        /// </summary>
+        /// <param name="estado">Nombre del estado</param>
+        protected void OnSelectEstado(string estado)
+        {
+            estadoString = estado ?? string.Empty;
+            mudTable.ReloadServerData();
+        }
+
         protected string SelectedRowClassFunc(TareaDto tarea, int rowNumber)
         {
             //Deseleccionar
