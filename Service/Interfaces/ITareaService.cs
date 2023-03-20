@@ -50,6 +50,12 @@ namespace Service.Interfaces
         /// Definición de método para eliminar un registro por el identificador
         /// </summary>
         /// <param name="id">Identificador de la tarea</param>
+        public Task<TareaDto> EstablecerComoImportante(int id);
+
+        /// <summary>
+        /// Definición de método para marcar una tarea como importante
+        /// </summary>
+        /// <param name="id">Identificador de la tarea</param>
         /// <returns>valor lógico que indica si se eliminó</returns>
         public Task<bool> DeleteById(int id);
     }

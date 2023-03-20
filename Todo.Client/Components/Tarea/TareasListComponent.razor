@@ -54,7 +54,7 @@
     </HeaderContent>
     <RowTemplate>
         <MudTd DataLabel="Importante" Style="text-align: center;">
-            <MudToggleIconButton Class="p-0 m-0" Toggled="context.EsImportante" style="padding: 5px;"
+            <MudToggleIconButton Class="p-0 m-0" Toggled="context.EsImportante" style="padding: 5px;" @onclick="(() => MarcarComoImportante(context.Id))"
                      Icon="@Icons.Material.Filled.Star" Color="@Color.Secondary" Size="Size.Medium"
                      ToggledIcon="@Icons.Material.Filled.Star" ToggledColor="@Color.Success" ToggledSize="Size.Medium"/>
         </MudTd>

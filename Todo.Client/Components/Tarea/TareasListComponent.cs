@@ -121,6 +121,20 @@ namespace Todo.Client.Components.Tarea
         {
             selectedItems.Clear(); //prevenir errores con la selección
         }
+        
+        protected async Task MarcarComoImportante(int TareaId)
+        {
+            try
+            {
+                await tareaService.EstablecerImportancia(TareaId);
+                Snackbar.Add("Importancia actualizada", Severity.Success);
+                await mudTable.ReloadServerData();
+            }
+            catch (System.Exception)
+            {
+                Snackbar.Add("No se pudo marcar la importancia", Severity.Error);
+            }
+        }
 
         /// <summary>
         /// Metodo publico para recargar la tabla de tareas

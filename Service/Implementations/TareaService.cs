@@ -137,6 +137,25 @@ namespace Service.Implementations
             return mapper.Map<TareaDto>(newTarea);
         }
 
+        public async Task<TareaDto> EstablecerComoImportante(int id)
+        {
+            unitOfWork.CreateTransaction();
+
+            var tarea = await repository.GetById(id);
+            if (tarea == null)
+            {
+                throw new NotFoundException();
+            }
+            
+            tarea.EsImportante = !tarea.EsImportante;
+
+            repository.Update(tarea);
+            await unitOfWork.SaveAsync();
+            await unitOfWork.CommitAsync();
+
+            return mapper.Map<TareaDto>(tarea);
+        }
+
         public async Task<bool> DeleteById(int id)
         {
             unitOfWork.CreateTransaction();

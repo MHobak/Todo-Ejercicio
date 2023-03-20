@@ -18,5 +18,7 @@ namespace Todo.Client.Services.Interfaces
             string searchTerm,
             string fecha,
             string estado);
+
+        Task<TareaDto> EstablecerImportancia(int tareaId);
     }
 }

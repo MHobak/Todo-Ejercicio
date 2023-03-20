@@ -113,12 +113,28 @@ namespace Todo.Api.Controllers
             }
         }
 
+        [HttpPatch("[action]")]
+        public async Task<IActionResult> EstablecerImportancia(int id)
+        {
+            try
+            {
+                if (id <= 0 ) return NotFound();
+                var result = await tareaService.EstablecerComoImportante(id);
+                return Ok(result);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         // DELETE: TareaController/Delete/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             try
             {
+                if (id <= 0 ) return NotFound();
                 var result = await tareaService.DeleteById(id);
                 return Ok(result);
             }

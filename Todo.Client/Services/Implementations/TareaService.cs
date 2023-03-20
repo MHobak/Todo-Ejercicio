@@ -1,3 +1,4 @@
+using System.Net.Http.Json;
 using Domain.DTOs;
 using Infraestructure.Utils.Dto;
 using Microsoft.AspNetCore.WebUtilities;
@@ -51,6 +52,22 @@ namespace Todo.Client.Services.Implementations
             {
                 throw new Exception(ex.Message);
             }
+        }
+
+        public async Task<TareaDto> EstablecerImportancia(int tareaId)
+        {
+            var response = await webApiService.PatchAsync($"{ApiRoutes.MarcarTareaComoImportante}?id={tareaId}");
+
+            if (!response.IsSuccessStatusCode)
+            {
+                var badResponse = await response.Content.ReadAsStringAsync();
+
+                throw new Exception(badResponse);
+            }
+
+            var result = await response.Content.ReadFromJsonAsync<TareaDto>();
+
+            return result;
         }
     }
 }
