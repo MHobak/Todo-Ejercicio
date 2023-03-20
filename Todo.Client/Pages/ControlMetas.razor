@@ -20,10 +20,9 @@
                 </CardHeaderContent>
             </MudCardHeader>
             <MudCardContent>
-                <AccionesTareaComponent @ref="accionesTareaComponent"
-                    OnSuccessActionMethod="RefreshTareas"/>
-
-                <TareasListComponent @ref="tareasListComponent"/>
+                <CascadingValue Value="@MetaId">
+                    <TareasListComponent @ref="tareasListComponent"/>
+                </CascadingValue>
             </MudCardContent>
         </MudCard>
     </MudItem>
@@ -34,22 +33,15 @@
 
     private TareasListComponent tareasListComponent;
 
-    private AccionesTareaComponent accionesTareaComponent;
-
     //Tarea seleccionada de la tabla de tareas
-    public TareaDto selectedRow { get; set; }
+    public int MetaId { get; set; }
 
     public void RefreshTareas()
     {
+        MetaId = metasListComponent.SelectedMetaId;
+        //No se usa el perametro en cascada para que al momento de cargar la lista de tareas ya se tenga el valor
         tareasListComponent.MetaId = metasListComponent.SelectedMetaId;
         tareasListComponent.NombreMeta = metasListComponent.SelectedMeta.Nombre;
         tareasListComponent.ReloadTareasTable();
-    }
-
-    public void SetActionsValues()
-    {
-        Console.WriteLine("xd");
-        //accionesTareaComponent.metaId = tareasListComponent.MetaId;
-        //accionesTareaComponent.tareaId = tareasListComponent.selectedRow.Id;
     }
 }

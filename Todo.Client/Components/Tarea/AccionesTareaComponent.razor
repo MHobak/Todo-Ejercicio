@@ -1,10 +1,9 @@
 @inherits AccionesTareaComponentaBase
-
 <MudCard Class="py-2 mb-2">
     <MudCardContent>
-        <MudButton @onclick="OpenAddTareaDialog" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Add" Color="Color.Default">Agregar</MudButton>
+        <MudButton @onclick="OpenAddTareaDialog" Disabled="@(MetaId > 0 ? false : true )" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Add" Color="Color.Default">Agregar</MudButton>
         <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.CheckCircle" Color="Color.Success">Completar tarea</MudButton>
-        <MudButton @onclick="OpenUpdateTareaDialog" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Edit" Color="Color.Warning">Editar</MudButton>
+        <MudButton @onclick="OpenUpdateTareaDialog" Disabled="@(TareaId > 0 ? false : true )" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Edit" Color="Color.Warning">Editar</MudButton>
         <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Delete" Color="Color.Error">Eliminar</MudButton>
     </MudCardContent>
 </MudCard>

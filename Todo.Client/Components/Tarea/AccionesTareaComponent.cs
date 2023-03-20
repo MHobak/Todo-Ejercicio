@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using Todo.Client.Services.Interfaces;
 using Domain.DTOs;
-using Todo.Client.Utils;
 
 namespace Todo.Client.Components.Tarea
 {
@@ -24,8 +23,11 @@ namespace Todo.Client.Components.Tarea
         [Parameter]
         public EventCallback OnSuccessActionMethod { get; set; }
         
-        public int metaId { get; set; }
-        public int tareaId { get; set; }
+        [CascadingParameter]
+        public int MetaId { get; set; }
+        
+        [Parameter]
+        public int TareaId { get; set; }
         #endregion
 
         #region Dialogs
@@ -34,6 +36,7 @@ namespace Todo.Client.Components.Tarea
             var parameters = new DialogParameters();
             //metodo declarado como parametro en el componente del dialogo
             parameters.Add("OnSuccessCreateEditMethod", OnSuccessActionMethod);
+            parameters.Add("MetaId", MetaId);
 
             var options = new DialogOptions { CloseOnEscapeKey = true };
             dialogService.Show<AgregarEditarTareaDialogComponent>("Agregar nueva tarea",parameters, options);
@@ -45,8 +48,8 @@ namespace Todo.Client.Components.Tarea
             //metodo declarado como parametro en el componente del dialogo
             parameters.Add("OnSuccessCreateEditMethod",OnSuccessActionMethod);
             parameters.Add("Actualizar", true);
-            parameters.Add("TareaId", tareaId);
-            parameters.Add("MetaId", metaId);
+            parameters.Add("TareaId", TareaId);
+            parameters.Add("MetaId", MetaId);
 
             var options = new DialogOptions { CloseOnEscapeKey = true };
             dialogService.Show<AgregarEditarTareaDialogComponent>("Editar tarea",parameters, options);
@@ -62,7 +65,6 @@ namespace Todo.Client.Components.Tarea
             var options = new DialogOptions { CloseOnEscapeKey = true };
             dialogService.Show<AgregarEditarTareaDialogComponent>("¿Estas Seguro?",parameters, options);
         }
-        #endregion    
-
+        #endregion
     }
 }

@@ -29,7 +29,7 @@ namespace Service.Validators
                 .GreaterThan(0)
                 .MustAsync(MetaExist)
                 .WithMessage("La meta asociada no existe")
-                .WithName("El nombre");
+                .WithName("El id de la meta");
         }
 
         private async Task<bool> TareaNameAlreadyExist(string name, CancellationToken token) =>

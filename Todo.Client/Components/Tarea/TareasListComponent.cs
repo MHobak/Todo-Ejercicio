@@ -19,6 +19,7 @@ namespace Todo.Client.Components.Tarea
         private ISnackbar Snackbar { get; set; }
 
         public int MetaId { get; set; }
+        
         public string NombreMeta { get; set; }
 
         protected ResponseWrapper<List<TareaDto>> serverResponse = new();

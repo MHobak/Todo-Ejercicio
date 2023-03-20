@@ -7,6 +7,7 @@
                 <MudTextField Label="Nombre" HelperText="Max. 80 caracteres"
                                 @bind-Value="model.Nombre" For="@(() => model.Nombre)"/>
                 <ApiValidationMessage TextFor="@(nameof(model.Nombre))" />
+                <ApiValidationMessage TextFor="@(nameof(model.MetaId))" />
             </MudPaper>
         </CascadingValue>
     </DialogContent>
