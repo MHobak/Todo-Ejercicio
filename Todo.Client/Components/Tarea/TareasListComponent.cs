@@ -29,8 +29,8 @@ namespace Todo.Client.Components.Tarea
         private string searchString;
         private string estadoString;
         private string fechaString;
-        private int selectedRowNumber = -1;
-        protected TareaDto selectedRow;
+        public HashSet<TareaDto> selectedItems = new HashSet<TareaDto>();
+        public TareaDto SelectedRow { get; set; } = new();
         #endregion
 
         /// <summary>
@@ -90,30 +90,32 @@ namespace Todo.Client.Components.Tarea
         {
             estadoString = estado ?? string.Empty;
             mudTable.ReloadServerData();
+            StateHasChanged();
         }
 
+        /// <summary>
+        /// Método para perzonalizar la seleccion de un row
+        /// </summary>
+        /// <param name="tarea">Elemento de tarea</param>
+        /// <param name="rowNumber">Numero de row seleccionado</param>
+        /// <returns></returns>
         protected string SelectedRowClassFunc(TareaDto tarea, int rowNumber)
         {
-            //Deseleccionar
-            if (selectedRowNumber == rowNumber)
-            {
-                selectedRowNumber = -1;
-                Console.WriteLine("NO seleccionado");
-                return string.Empty;
-            }
-            //seleccionar
-            else if (mudTable.SelectedItem != null && mudTable.SelectedItem.Equals(tarea))
-            {
-                selectedRowNumber = rowNumber;
-                Console.WriteLine($"Seleccionado: {tarea.Id}");
-                return "selected";
-            }
-            else
-            {
-                return string.Empty;
-            }
+            return SelectedRow.Equals(tarea) ? "selected" : string.Empty;
         }
 
+        /// <summary>
+        /// Se ejecuta al hacer click en un row, necesario para personalizar la selección
+        /// </summary>
+        /// <param name="tableRowClickEventArgs"></param>
+        protected void RowClickEvent(TableRowClickEventArgs<TareaDto> tableRowClickEventArgs)
+        {
+            SelectedRow = tableRowClickEventArgs.Item;
+        }
+
+        /// <summary>
+        /// Metodo publico para recargar la tabla de tareas
+        /// </summary>
         public void ReloadTareasTable()
         {
             mudTable.ReloadServerData();

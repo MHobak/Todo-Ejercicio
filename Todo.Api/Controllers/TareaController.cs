@@ -47,6 +47,8 @@ namespace Todo.Api.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
+            if (id <= 0 ) return NotFound();
+            
             var result = await tareaService.GetById(id);
 
             if (result == null)

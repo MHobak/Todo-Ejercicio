@@ -20,6 +20,9 @@
                 </CardHeaderContent>
             </MudCardHeader>
             <MudCardContent>
+                <AccionesTareaComponent @ref="accionesTareaComponent"
+                    OnSuccessActionMethod="RefreshTareas"/>
+
                 <TareasListComponent @ref="tareasListComponent"/>
             </MudCardContent>
         </MudCard>
@@ -31,10 +34,22 @@
 
     private TareasListComponent tareasListComponent;
 
+    private AccionesTareaComponent accionesTareaComponent;
+
+    //Tarea seleccionada de la tabla de tareas
+    public TareaDto selectedRow { get; set; }
+
     public void RefreshTareas()
     {
         tareasListComponent.MetaId = metasListComponent.SelectedMetaId;
         tareasListComponent.NombreMeta = metasListComponent.SelectedMeta.Nombre;
         tareasListComponent.ReloadTareasTable();
+    }
+
+    public void SetActionsValues()
+    {
+        Console.WriteLine("xd");
+        //accionesTareaComponent.metaId = tareasListComponent.MetaId;
+        //accionesTareaComponent.tareaId = tareasListComponent.selectedRow.Id;
     }
 }

@@ -1,0 +1,17 @@
+@inherits AgregarEditarTareaDialogComponentBase 
+
+<MudDialog>
+    <DialogContent>
+        <CascadingValue Value="@validationErrors">
+            <MudPaper Class="pa-4" style="Width:400px">
+                <MudTextField Label="Nombre" HelperText="Max. 80 caracteres"
+                                @bind-Value="model.Nombre" For="@(() => model.Nombre)"/>
+                <ApiValidationMessage TextFor="@(nameof(model.Nombre))" />
+            </MudPaper>
+        </CascadingValue>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancelal</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit">@(Actualizar ? "Actualizar" : "Registrar")</MudButton>
+    </DialogActions>
+</MudDialog>

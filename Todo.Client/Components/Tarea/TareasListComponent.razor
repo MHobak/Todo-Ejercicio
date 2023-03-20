@@ -3,7 +3,7 @@
 
 <style>
     .selected {
-        background-color: #1E88E5 !important;
+        background-color: #3e99e980 !important;
     }
 
         .selected > td {
@@ -16,15 +16,20 @@
 </style>
 
 <MudTable ServerData="@(new Func<TableState, Task<TableData<TareaDto>>>(ServerReload))"
-          Dense="true" Hover="true" @ref="mudTable" RowsPerPage="5" SelectedRow="@selectedRow">
+        Hover="true" @ref="mudTable" RowsPerPage="5" MultiSelection="true" SelectOnRowClick="false"
+        OnRowClick="RowClickEvent" T="TareaDto" RowClassFunc="@SelectedRowClassFunc" @bind-SelectedItems="selectedItems">
     <ToolBarContent>
         <MudText Typo="Typo.h6">@(string.IsNullOrWhiteSpace(NombreMeta) ? "Seleccione una Meta" : "Tareas de " + NombreMeta)</MudText>
         <MudSpacer />
+        <div style="display: block;">
+            <MudText>Tareas seleccionadas: @selectedItems?.Count</MudText>
+            <MudText>Tarea: @SelectedRow?.Nombre</MudText>
+        </div>
     </ToolBarContent>
     <HeaderContent>
         <MudTh>
             <MudTableSortLabel SortLabel="EsImportante" T="TareaDto"> </MudTableSortLabel>
-            <MudField Disabled="true" Label=" " Variant="Variant.Filled"></MudField>
+            <MudField Disabled="true" Label=" "></MudField>
         </MudTh>
         <MudTh>
             <MudTableSortLabel SortLabel="Nombre" T="TareaDto">Nombre</MudTableSortLabel>
@@ -46,12 +51,9 @@
     </HeaderContent>
     <RowTemplate>
         <MudTd DataLabel="Importante" Style="text-align: center;">
-            @if(context.EsImportante){
-                <MudIcon Icon="@Icons.Material.Filled.Star" Color="@Color.Success" Size="Size.Large" />
-            }else{
-                <MudIcon Icon="@Icons.Material.Filled.Star" Color="@Color.Secondary" Size="Size.Large" />
-            }
-            
+            <MudToggleIconButton Class="p-0 m-0" Toggled="context.EsImportante" style="padding: 5px;"
+                     Icon="@Icons.Material.Filled.Star" Color="@Color.Secondary" Size="Size.Medium"
+                     ToggledIcon="@Icons.Material.Filled.Star" ToggledColor="@Color.Success" ToggledSize="Size.Medium"/>
         </MudTd>
         <MudTd DataLabel="Nombre">@context.Nombre</MudTd>
         <MudTd DataLabel="Fecha">@context.FechaCreacion</MudTd>
@@ -59,10 +61,10 @@
             @switch (context.Estado)
             {
                 case Domain.Enums.EstadoTarea.Abierta:
-                    <MudChip Variant="Variant.Filled">@context.Estado</MudChip>
+                    <MudChip style="margin: 0px; height: 25px;">@context.Estado</MudChip>
                 break;
                 case Domain.Enums.EstadoTarea.Completada:
-                    <MudChip Variant="Variant.Filled" Color="Color.Success">@context.Estado</MudChip>
+                    <MudChip style="margin: 0px; height: 25px;" Color="Color.Success">@context.Estado</MudChip>
                 break;
             }
             

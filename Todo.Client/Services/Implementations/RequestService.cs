@@ -19,6 +19,25 @@ namespace Todo.Client.Services.Implementations
         }
 
         /// <summary>
+        /// Método para consultar un registro por id
+        /// </summary>
+        /// <param name="id">id del registro a consultar</param>
+        /// <returns>Registro</returns>
+        public async Task<T> GetById(int id)
+        {
+            try
+            {
+
+                var result = await webApiService.GetAsync<T>($"{apiResourceRoute}/{id}");
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        /// <summary>
         /// Método para obtener registros
         /// </summary>
         /// <param name="route">Ruta de la api para consulta</param>

@@ -11,10 +11,16 @@ namespace Todo.Client.Services.Interfaces
         Task<ResponseWrapper<List<T>>> Get(int pageNumber, int pageSize);
 
         /// <summary>
+        /// Método para consultar un registro por id
+        /// </summary>
+        /// <param name="id">id del registro a consultar</param>
+        /// <returns>Registro</returns>
+        Task<T>GetById(int id);
+
+        /// <summary>
         /// Método para crear un nuevo registro
         /// </summary>
         /// <param name="T">Registro a crear</param>
-        /// <param name="route">Ruta del método de la api</param>
         /// <returns>Registro creado</returns>
         Task<T>Create(T value);
 
