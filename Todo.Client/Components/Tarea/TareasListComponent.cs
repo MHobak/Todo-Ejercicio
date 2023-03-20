@@ -26,7 +26,10 @@ namespace Todo.Client.Components.Tarea
         
         protected MudTable<TareaDto> mudTable;
 
-        protected readonly int[] pageSizeOption = { 2, 5, 10, 15, 20 };
+        protected readonly int[] pageSizeOption = { 5, 10, 15, 20 };
+        //bind value para hacer funcionar la paginacion con la multiseleción
+        protected int rowsPerPage { get; set; } = 5;
+
         private string searchString;
         private string estadoString;
         private string fechaString;
@@ -46,7 +49,7 @@ namespace Todo.Client.Components.Tarea
                     serverResponse = await tareaService.Get(
                     MetaId,
                     state.Page + 1, //la propiedad del componente es idex basado en 0
-                    state.PageSize,
+                    rowsPerPage,
                     state.SortLabel,
                     state.SortDirection == SortDirection.None ? SortDirection.Ascending.ToString() : state.SortDirection.ToString(),
                     searchString,
@@ -112,6 +115,11 @@ namespace Todo.Client.Components.Tarea
         protected void RowClickEvent(TableRowClickEventArgs<TareaDto> tableRowClickEventArgs)
         {
             SelectedRow = tableRowClickEventArgs.Item;
+        }
+
+        protected void OnRowsPerPageChanged(int pageSize)
+        {
+            selectedItems.Clear(); //prevenir errores con la selección
         }
 
         /// <summary>

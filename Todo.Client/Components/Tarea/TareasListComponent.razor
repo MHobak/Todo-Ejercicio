@@ -18,8 +18,9 @@
 <AccionesTareaComponent TareaId="SelectedRow.Id" OnSuccessActionMethod="ReloadTareasTable"/>  
 
 <MudTable ServerData="@(new Func<TableState, Task<TableData<TareaDto>>>(ServerReload))"
-        Hover="true" @ref="mudTable" RowsPerPage="5" MultiSelection="true" SelectOnRowClick="false"
-        OnRowClick="RowClickEvent" T="TareaDto" RowClassFunc="@SelectedRowClassFunc" @bind-SelectedItems="selectedItems">
+        Hover="true" @ref="mudTable" MultiSelection="true" SelectOnRowClick="false" @bind-RowsPerPage="rowsPerPage"
+        OnRowClick="RowClickEvent" T="TareaDto" RowClassFunc="@SelectedRowClassFunc" 
+        @bind-SelectedItems="selectedItems" >
     <ToolBarContent>
         <MudText Typo="Typo.h6">@(string.IsNullOrWhiteSpace(NombreMeta) ? "Seleccione una Meta" : "Tareas de " + NombreMeta)</MudText>
         <MudSpacer />
