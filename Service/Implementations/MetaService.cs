@@ -5,6 +5,8 @@ using Persistence.Interfaces.Generic;
 using Persistence.Interfaces.Repository;
 using Service.Interfaces;
 using Infraestructure.Exceptions;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Service.Implementations
 {
@@ -74,6 +76,7 @@ namespace Service.Implementations
             unitOfWork.CreateTransaction();
 
             var meta = await repository.GetById(id);
+
             if (meta == null)
             {
                 throw new NotFoundException();

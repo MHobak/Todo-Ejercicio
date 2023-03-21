@@ -18,7 +18,7 @@ namespace Persistence.Mappings
             builder.HasOne(m => m.Meta)
                 .WithMany(t => t.Tareas)
                 .HasForeignKey(t => t.MetaId)
-                .OnDelete(DeleteBehavior.ClientCascade); //Habilitar el borrado en casacada
+                .OnDelete(DeleteBehavior.Cascade); //Habilitar el borrado en casacada
 
             builder.Property(t => t.Nombre)
                 .IsRequired()
