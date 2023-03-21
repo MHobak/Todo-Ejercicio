@@ -25,9 +25,9 @@ namespace Todo.Client.Services.Interfaces
         Task<T>Create(T value);
 
         /// <summary>
-        /// Metodo para eliminar meta
+        /// Metodo para eliminar un registro
         /// </summary>
-        /// <param name="Id">Identificador de la meta</param>
+        /// <param name="Id">Identificador</param>
         /// <returns>Task</returns>
         Task Delete(int Id);
 

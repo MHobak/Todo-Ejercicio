@@ -15,7 +15,7 @@
             }
 </style>
 
-<AccionesTareaComponent TareaId="SelectedRow.Id" OnSuccessActionMethod="ReloadTareasTable"/>  
+<AccionesTareaComponent TareaId="SelectedRow.Id" Tareas="selectedItems" OnSuccessActionMethod="ReloadTareasTable"/>  
 
 <MudTable ServerData="@(new Func<TableState, Task<TableData<TareaDto>>>(ServerReload))"
         Hover="true" @ref="mudTable" MultiSelection="true" SelectOnRowClick="false" @bind-RowsPerPage="rowsPerPage"
@@ -54,7 +54,7 @@
     </HeaderContent>
     <RowTemplate>
         <MudTd DataLabel="Importante" Style="text-align: center;">
-            <MudToggleIconButton Class="p-0 m-0" Toggled="context.EsImportante" style="padding: 5px;" @onclick="(() => MarcarComoImportante(context.Id))"
+            <MudToggleIconButton Class="p-0 m-0" Toggled="context.EsImportante" style="padding: 5px;" @onclick="(async () => await MarcarComoImportante(context.Id))"
                      Icon="@Icons.Material.Filled.Star" Color="@Color.Secondary" Size="Size.Medium"
                      ToggledIcon="@Icons.Material.Filled.Star" ToggledColor="@Color.Success" ToggledSize="Size.Medium"/>
         </MudTd>

@@ -21,7 +21,9 @@
             </MudCardHeader>
             <MudCardContent>
                 <CascadingValue Value="@MetaId">
-                    <TareasListComponent @ref="tareasListComponent"/>
+                    <CascadingValue Value="RecargarMetas">
+                        <TareasListComponent @ref="tareasListComponent"/>
+                    </CascadingValue>
                 </CascadingValue>
             </MudCardContent>
         </MudCard>
@@ -35,6 +37,14 @@
 
     //Tarea seleccionada de la tabla de tareas
     public int MetaId { get; set; }
+
+    public Func<Task> RecargarMetas { get; set; }
+
+    protected override Task OnAfterRenderAsync(bool firstRender)
+    {
+        RecargarMetas = (async () => await metasListComponent.GetMetas());
+        return base.OnAfterRenderAsync(firstRender);
+    }
 
     public void RefreshTareas()
     {

@@ -172,5 +172,40 @@ namespace Service.Implementations
 
             return true;
         }
+
+        public async Task DeleteByIds(int[] ids)
+        {
+            unitOfWork.CreateTransaction();
+
+            var tareas = await repository.GetAsync(t => ids.Contains(t.Id));
+            if (tareas == null)
+            {
+                throw new NotFoundException();
+            }
+            
+            repository.DeleteMany(tareas);
+            await unitOfWork.SaveAsync();
+            await unitOfWork.CommitAsync();
+        }
+
+        public async Task Completar(int[] ids)
+        {
+            unitOfWork.CreateTransaction();
+
+            var tareas = await repository.GetAsync(t => ids.Contains(t.Id));
+            if (tareas == null)
+            {
+                throw new NotFoundException();
+            }
+
+            foreach (var tarea in tareas)
+            {
+                tarea.Estado = EstadoTarea.Completada;
+            }
+            
+            repository.UpdateMany(tareas);
+            await unitOfWork.SaveAsync();
+            await unitOfWork.CommitAsync();
+        }
     }
 }

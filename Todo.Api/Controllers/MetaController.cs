@@ -100,7 +100,7 @@ namespace Todo.Api.Controllers
         }
 
         // DELETE: MetaController/Delete/5
-        [HttpDelete("{id}")]
+        [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {
             try

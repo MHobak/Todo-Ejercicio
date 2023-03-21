@@ -1,0 +1,75 @@
+@inject ISnackbar Snackbar
+<MudDialog>
+    <DialogContent>
+            @if (Tareas?.Count == 1 && Tareas?.Count !=0)
+            {
+                <MudText>
+                    Que desea eliminar la tarea: @(Tareas.FirstOrDefault().Nombre)
+                </MudText>
+            }
+            
+            @if(Tareas?.Count > 1)
+            {
+                <MudText Class="mb-2">
+                    Que desea eliminar las siguientes tareas:
+                </MudText>
+                <MudExpansionPanels>
+                    <MudExpansionPanel Text="Tareas a eliminar" MaxHeight="150">
+                        @foreach (var tarea in Tareas)
+                        {
+                            <MudText>- @tarea.Nombre</MudText>
+                        }
+                    </MudExpansionPanel>
+                </MudExpansionPanels>
+            }
+
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Error" Variant="Variant.Filled" OnClick="Submit">Aceptar</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    
+    [Parameter] 
+    public Func<Task> RecargarMetas { get; set; }
+
+    [Inject]
+    private ITareaService TareaService { get; set; }
+
+    [Parameter]
+    public EventCallback OnSuccessDeleteMethod { get; set; }
+
+    [Parameter] 
+    public HashSet<TareaDto> Tareas { get; set; }
+
+    async Task Submit()
+    { 
+        await DeleteTareas();
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+    
+    void Cancel() => MudDialog.Cancel();
+
+    public async Task DeleteTareas()
+    {
+        try
+        {
+            var ids = Tareas.Select(x => x.Id).ToArray();
+            if (ids is null) return;
+
+            await TareaService.Delete(ids);
+            
+            Snackbar.Add(ids.Count() > 1 ? "¡Tareas eliminadas!" : "¡Tarea eliminada!", Severity.Success);
+            
+            await OnSuccessDeleteMethod.InvokeAsync();
+            await RecargarMetas.Invoke();
+        }
+        catch (System.Exception ex)
+        {
+            Snackbar.Add($"No realizó la operación de manera correcta: {ex.Message}", Severity.Error);
+        }
+    }
+}

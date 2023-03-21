@@ -51,6 +51,16 @@ namespace Persistence.Implementations.Generic
         }
 
         /// <summary>
+        /// Implemetación de método que elimina varios elementos
+        /// de tipo T de la entidad.
+        /// </summary>
+        /// <param name="objs">Objetos de tipo T que se eliminarán</param>
+        public void DeleteMany(IEnumerable<T> objs)
+        {
+            _dbSet.RemoveRange(objs);
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="whereCondition"></param>
@@ -107,10 +117,10 @@ namespace Persistence.Implementations.Generic
         /// <summary>
         /// Implementación de método para insertar una colección de tipo T.
         /// </summary>
-        /// <param name="_objs">Colección de objetos de tipo T que se insertará.</param>
-        public void Insert(IEnumerable<T> _objs)
+        /// <param name="objs">Colección de objetos de tipo T que se insertará.</param>
+        public void Insert(IEnumerable<T> objs)
         {
-            this._dbSet.AddRange(_objs);
+            this._dbSet.AddRange(objs);
         }
 
         /// <summary>
@@ -118,9 +128,19 @@ namespace Persistence.Implementations.Generic
         /// de tipo T.
         /// </summary>
         /// <param name="obj">Objeto de tipo T que se actualizará</param>
-        public void Update(T _obj)
+        public void Update(T obj)
         {
-            this._dbSet.Update(_obj);
+            this._dbSet.Update(obj);
+        }
+
+        /// <summary>
+        /// Implementación de método que actualiza varios registros
+        /// de tipo T.
+        /// </summary>
+        /// <param name="objs">Objetos de tipo T que se actualizarán</param>
+        public void UpdateMany(IEnumerable<T> objs)
+        {
+            this._dbSet.UpdateRange(objs);
         }
 
         /// <summary>

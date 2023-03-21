@@ -129,7 +129,7 @@ namespace Todo.Api.Controllers
         }
 
         // DELETE: TareaController/Delete/5
-        [HttpDelete("{id}")]
+        [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {
             try
@@ -137,6 +137,36 @@ namespace Todo.Api.Controllers
                 if (id <= 0 ) return NotFound();
                 var result = await tareaService.DeleteById(id);
                 return Ok(result);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> DeleteMany(int[] ids)
+        {
+            try
+            {
+                if (ids == null ) return NotFound();
+                await tareaService.DeleteByIds(ids);
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> Completar(int[] ids)
+        {
+            try
+            {
+                if (ids == null ) return NotFound();
+                await tareaService.Completar(ids);
+                return Ok();
             }
             catch(Exception ex)
             {

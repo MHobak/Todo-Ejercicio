@@ -82,6 +82,11 @@ namespace Todo.Client.Services.Implementations
             return result;
         }
 
+        /// <summary>
+        /// Metodo para eliminar un registro
+        /// </summary>
+        /// <param name="Id">Identificador</param>
+        /// <returns>Task</returns>
         public async Task Delete(int Id)
         {
             var response = await webApiService.DeleteAsync($"{apiResourceRoute}/{Id}");

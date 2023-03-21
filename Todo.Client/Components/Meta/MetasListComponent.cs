@@ -68,7 +68,7 @@ namespace Todo.Client.Components.Meta
         }
         #endregion    
 
-        protected async Task GetMetas()
+        public async Task GetMetas()
         {
             try
             {

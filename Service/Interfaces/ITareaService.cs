@@ -47,16 +47,29 @@ namespace Service.Interfaces
         Task<TareaDto> Update(TareaDto request);
 
         /// <summary>
-        /// Definición de método para eliminar un registro por el identificador
+        /// Definición de método para defifnir tareas como importantes
         /// </summary>
         /// <param name="id">Identificador de la tarea</param>
-        public Task<TareaDto> EstablecerComoImportante(int id);
+        Task<TareaDto> EstablecerComoImportante(int id);
 
         /// <summary>
-        /// Definición de método para marcar una tarea como importante
+        /// Definición de método para cambiar el estado de varias tareas como completada
+        /// </summary>
+        /// <param name="ids">Identificadores de las tareas</param>
+        Task Completar(int[] ids);
+
+        /// <summary>
+        /// Definición de método para eliminar una tarea
         /// </summary>
         /// <param name="id">Identificador de la tarea</param>
         /// <returns>valor lógico que indica si se eliminó</returns>
-        public Task<bool> DeleteById(int id);
+        Task<bool> DeleteById(int id);
+
+        /// <summary>
+        /// Definición de método para eliminar varias tareas
+        /// </summary>
+        /// <param name="ids">Identificadores de las tareas</param>
+        /// <returns>valor lógico que indica si se eliminó</returns>
+        Task DeleteByIds(int[] ids);
     }
 }

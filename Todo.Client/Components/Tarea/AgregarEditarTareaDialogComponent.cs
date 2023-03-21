@@ -11,6 +11,9 @@ namespace Todo.Client.Components.Meta
         [CascadingParameter] 
         public MudDialogInstance mudDialog { get; set; }
         
+        [Parameter] 
+        public Func<Task> RecargarMetas { get; set; }
+        
         [Inject]
         protected ITareaService tareaService { get; set; }
 
@@ -88,6 +91,7 @@ namespace Todo.Client.Components.Meta
                     model = result;
                     snackbar.Add("¡Tarea registrada!", Severity.Success);
                     await OnSuccessCreateEditMethod.InvokeAsync();
+                    await RecargarMetas?.Invoke();
                 }
                 else
                 {
@@ -114,6 +118,7 @@ namespace Todo.Client.Components.Meta
                     model = result;
                     snackbar.Add("¡Tarea actualizada!", Severity.Success);
                     await OnSuccessCreateEditMethod.InvokeAsync();
+                    await RecargarMetas?.Invoke();
                 }
                 else
                 {

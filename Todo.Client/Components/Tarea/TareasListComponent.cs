@@ -26,7 +26,7 @@ namespace Todo.Client.Components.Tarea
         
         protected MudTable<TareaDto> mudTable;
 
-        protected readonly int[] pageSizeOption = { 5, 10, 15, 20 };
+        protected readonly int[] pageSizeOption = { 5, 10, 15, 20, int.MaxValue };
         //bind value para hacer funcionar la paginacion con la multiseleción
         protected int rowsPerPage { get; set; } = 5;
 
@@ -66,6 +66,24 @@ namespace Todo.Client.Components.Tarea
             return new TableData<TareaDto>() {TotalItems = serverResponse.TotalItems, Items = data}; 
         }
 
+        /// <summary>
+        /// Método para actualizar el estado de importacia de una tarea
+        /// </summary>
+        /// <param name="TareaId">Identificador de la tarea</param>
+        protected async Task MarcarComoImportante(int TareaId)
+        {
+            try
+            {
+                await tareaService.EstablecerImportancia(TareaId);
+                await mudTable.ReloadServerData();
+            }
+            catch (System.Exception)
+            {
+                Snackbar.Add("No se pudo marcar la importancia", Severity.Error);
+            }
+        }
+
+        #region EventosTabla
         /// <summary>
         /// Metodo para realiozar busqueda en la tabla
         /// </summary>
@@ -122,19 +140,7 @@ namespace Todo.Client.Components.Tarea
             selectedItems.Clear(); //prevenir errores con la selección
         }
         
-        protected async Task MarcarComoImportante(int TareaId)
-        {
-            try
-            {
-                await tareaService.EstablecerImportancia(TareaId);
-                Snackbar.Add("Importancia actualizada", Severity.Success);
-                await mudTable.ReloadServerData();
-            }
-            catch (System.Exception)
-            {
-                Snackbar.Add("No se pudo marcar la importancia", Severity.Error);
-            }
-        }
+        #endregion
 
         /// <summary>
         /// Metodo publico para recargar la tabla de tareas

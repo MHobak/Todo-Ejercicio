@@ -40,11 +40,25 @@ namespace Persistence.Interfaces.Generic
         void Update(T obj);
 
         /// <summary>
+        /// Implementación de método que actualiza varios registros
+        /// de tipo T.
+        /// </summary>
+        /// <param name="objs">Objetos de tipo T que se actualizarán</param>
+        public void UpdateMany(IEnumerable<T> objs);
+
+        /// <summary>
         /// Definición de método para eliminar un elemento de
         /// tipo T
         /// </summary>
         /// <param name="obj">Objeto de tipo T que se eliminará</param>
         void Delete(T obj);
+
+        /// <summary>
+        /// Definición de método para eliminar varios elementos
+        /// tipo T
+        /// </summary>
+        /// <param name="objs">Objetos de tipo T que se eliminarán</param>
+        void DeleteMany(IEnumerable<T> objs);
 
         /// <summary>
         /// Definición de método para consultar mediante una expresión o filtro
