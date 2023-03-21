@@ -148,6 +148,7 @@ namespace Todo.Client.Components.Tarea
         public void ReloadTareasTable()
         {
             mudTable.ReloadServerData();
+            SelectedRow.Id=0;
         }
     }
 }
