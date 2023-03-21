@@ -21,6 +21,9 @@ namespace Todo.Client.Components.Meta
         [Parameter]
         public EventCallback OnMetaSelectedItem { get; set; }
 
+        [Parameter]
+        public EventCallback OnMetaDeletedItem { get; set; }
+
         public int SelectedMetaId { get; set; }
         public MetaDto SelectedMeta { get; set; }
 
@@ -60,7 +63,7 @@ namespace Todo.Client.Components.Meta
         {
             var parameters = new DialogParameters();
             //metodo declarado como parametro en el componente del dialogo
-            parameters.Add("OnSuccessDeleteMethod", async() => await GetMetas());
+            parameters.Add("OnSuccessDeleteMethod", async() => await OnDeletedMeta()); //recargar tabla de metas y tareas
             parameters.Add("Meta", meta);
 
             var options = new DialogOptions { CloseOnEscapeKey = true };
@@ -98,6 +101,13 @@ namespace Todo.Client.Components.Meta
             SelectedMetaId = Convert.ToInt32(item);
             SelectedMeta = metas.FirstOrDefault(x => x.Id == SelectedMetaId);
             OnMetaSelectedItem.InvokeAsync();
+        }
+
+        private async Task OnDeletedMeta()
+        {
+            //Resetear tabla de tareas
+            await GetMetas();
+            await OnMetaDeletedItem.InvokeAsync();
         }
     }
 }

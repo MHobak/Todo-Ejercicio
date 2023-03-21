@@ -10,7 +10,7 @@
 </MudPaper>
 <MudGrid Spacing="1" class="pa-2">
     <MudItem xs="4">
-        <MetasListComponent @ref="metasListComponent" OnMetaSelectedItem="RefreshTareas"/>
+        <MetasListComponent @ref="metasListComponent" OnMetaSelectedItem="RefreshTareas" OnMetaDeletedItem="RefreshTareasOndeletedMeta"/>
     </MudItem>
     <MudItem xs="8" >
         <MudCard Width="100%">
@@ -49,9 +49,18 @@
     public void RefreshTareas()
     {
         MetaId = metasListComponent.SelectedMetaId;
-        //No se usa el perametro en cascada para que al momento de cargar la lista de tareas ya se tenga el valor
         tareasListComponent.MetaId = metasListComponent.SelectedMetaId;
         tareasListComponent.NombreMeta = metasListComponent.SelectedMeta.Nombre;
+        tareasListComponent.SelectedRow.Id = 0;
         tareasListComponent.ReloadTareasTable();
+    }
+
+    public void RefreshTareasOndeletedMeta()
+    {
+        tareasListComponent.ReloadTareasTable();
+        MetaId = 0;
+        tareasListComponent.MetaId = 0;
+        tareasListComponent.NombreMeta = string.Empty;
+        tareasListComponent.SelectedRow.Id = 0;
     }
 }
