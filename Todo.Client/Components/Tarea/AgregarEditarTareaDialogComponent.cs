@@ -118,7 +118,6 @@ namespace Todo.Client.Components.Meta
                     model = result;
                     snackbar.Add("¡Tarea actualizada!", Severity.Success);
                     await OnSuccessCreateEditMethod.InvokeAsync();
-                    await RecargarMetas?.Invoke();
                 }
                 else
                 {
